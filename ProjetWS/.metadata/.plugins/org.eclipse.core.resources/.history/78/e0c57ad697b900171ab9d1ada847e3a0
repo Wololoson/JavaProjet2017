@@ -1,0 +1,19 @@
+package be.wilson.ClubVelo;
+
+public class Adresse {
+	private int id;
+	private String rue;
+	private int num;
+	private String ville;
+	private String codePost;
+	private String pays;
+	
+	public Adresse(int id, String rue, int num, String ville, String codePost, String pays){
+		this.id = id;
+		this.rue = rue;
+		this.num = num;
+		this.ville = ville;
+		this.codePost = codePost;
+		this.pays = pays;
+	}
+}

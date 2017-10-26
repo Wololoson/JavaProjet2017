@@ -1,0 +1,7 @@
+package be.wilson.ClubVelo;
+
+import java.io.Serializable;
+
+public class Categorie implements Serializable{
+	
+}

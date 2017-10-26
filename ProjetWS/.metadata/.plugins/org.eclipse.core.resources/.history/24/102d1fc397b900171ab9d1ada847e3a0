@@ -1,0 +1,10 @@
+package be.wilson.ClubVelo;
+
+public class Adresse {
+	private int id;
+	private String rue;
+	private int num;
+	private String ville;
+	private String codePost;
+	private String pays;
+}

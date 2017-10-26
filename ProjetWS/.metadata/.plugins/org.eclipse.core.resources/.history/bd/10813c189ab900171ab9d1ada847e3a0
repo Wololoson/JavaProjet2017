@@ -1,0 +1,10 @@
+package be.wilson.ClubVelo;
+
+public class VTT extends Categorie{
+
+	public VTT(int id, int nbMembres) {
+		super(id, nbMembres);
+		
+	}
+
+}

@@ -1,0 +1,10 @@
+package be.wilson.ClubVelo;
+
+public class Cyclo extends Categorie {
+
+	public Cyclo(int id, int nbMembres) {
+		super(id, nbMembres);
+		// TODO Auto-generated constructor stub
+	}
+
+}

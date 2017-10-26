@@ -1,0 +1,5 @@
+package be.wilson.ClubVelo;
+
+public class Adresse {
+	private int id;
+}

@@ -1,0 +1,10 @@
+package be.wilson.ClubVelo;
+
+import java.util.*;
+
+public class Balade {
+	private int id;
+	private String libelle;
+	private Adresse adr;
+	private GregorianCalendar date;
+}

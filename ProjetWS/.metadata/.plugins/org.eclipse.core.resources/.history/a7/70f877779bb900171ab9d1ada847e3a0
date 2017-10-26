@@ -1,0 +1,8 @@
+package be.wilson.ClubVelo;
+
+import java.io.Serializable;
+
+public class Membre extends Personne{
+	private static final long serialVersionUID = 4199324936270699959L;
+	
+}
