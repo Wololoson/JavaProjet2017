@@ -16,4 +16,13 @@ public class Calendrier {
 	public void setCal(List<Balade> cal) {
 		this.cal = cal;
 	}
+	
+	public void addBalade(Balade b){
+		if(!cal.contains(b))
+			cal.add(b);
+	}
+	
+	public void removeBalade(Balade b){
+		cal.remove(b);
+	}
 }

@@ -1,0 +1,37 @@
+package be.wilson.ClubVelo;
+
+import java.sql.*;
+
+public class MembreDAO extends DAO<MembreDAO>{
+	public MembreDAO(DBConnection conn){
+		super(conn);
+	}
+	
+	public boolean create(Membre obj){		
+		return false;
+	}
+	
+	public boolean delete(Membre obj){
+		return false;
+	}
+	
+	public boolean update(Membre obj){
+		return false;
+	}
+	
+	public MembreDAO find(int id){
+		Membre eleve = new Membre();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+	ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Eleve WHERE elv_id = " + id);
+			if(result.first())
+eleve = new Eleve(id, result.getString("elv_nom"), result.getString("elv_prenom"));
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return eleve;
+	}
+
+}

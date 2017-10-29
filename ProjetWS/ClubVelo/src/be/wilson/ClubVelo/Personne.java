@@ -1,21 +1,23 @@
 package be.wilson.ClubVelo;
 
 import java.io.Serializable;
-import java.util.GregorianCalendar;
+import java.sql.Date;
 
 public abstract class Personne  implements Serializable {
 	private static final long serialVersionUID = -3480279736443429062L;
 	private int id;
 	private String nom;
 	private String prenom;
-	private GregorianCalendar dateNaiss;
+	private Date dateNaiss;
 	
-	public Personne(int id, String nom, String prenom, GregorianCalendar dateNaiss) {
+	public Personne(int id, String nom, String prenom, Date dateNaiss) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaiss = dateNaiss;
 	}
+	
+	public Personne(){}
 
 	public int getId() {
 		return id;
@@ -41,11 +43,11 @@ public abstract class Personne  implements Serializable {
 		this.prenom = prenom;
 	}
 
-	public GregorianCalendar getDateNaiss() {
+	public Date getDateNaiss() {
 		return dateNaiss;
 	}
 
-	public void setDateNaiss(GregorianCalendar dateNaiss) {
+	public void setDateNaiss(Date dateNaiss) {
 		this.dateNaiss = dateNaiss;
 	}
 	
