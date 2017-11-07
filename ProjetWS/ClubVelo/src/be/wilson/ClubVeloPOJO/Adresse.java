@@ -4,14 +4,14 @@ import java.io.*;
 
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = 6895178666450590071L;
-	private int id;
+	private long id;
 	private String rue;
 	private int num;
 	private String ville;
 	private String codePost;
 	private String pays;
 	
-	public Adresse(int id, String rue, int num, String ville, String codePost, String pays){
+	public Adresse(long id, String rue, int num, String ville, String codePost, String pays){
 		this.id = id;
 		this.rue = rue;
 		this.num = num;
@@ -22,7 +22,7 @@ public class Adresse implements Serializable {
 	
 	public Adresse(){}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 

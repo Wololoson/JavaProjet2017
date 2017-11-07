@@ -5,13 +5,13 @@ import java.sql.Date;
 
 public abstract class Personne  implements Serializable {
 	private static final long serialVersionUID = -3480279736443429062L;
-	private int id;
+	private long id;
 	private String nom;
 	private String prenom;
 	private Date dateNaiss;
 	private Adresse adr;
 	
-	public Personne(int id, String nom, String prenom, Date dateNaiss, Adresse adr) {
+	public Personne(long id, String nom, String prenom, Date dateNaiss, Adresse adr) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
@@ -21,11 +21,11 @@ public abstract class Personne  implements Serializable {
 	
 	public Personne(){}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
