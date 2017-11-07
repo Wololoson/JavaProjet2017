@@ -1,8 +1,0 @@
-package be.wilson.ClubVelo;
-
-import java.io.Serializable;
-
-public class Responsable implements Serializable {
-	private static final long serialVersionUID = 2364367160201498393L;
-
-}

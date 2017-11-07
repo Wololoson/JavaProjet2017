@@ -1,7 +1,0 @@
-package be.wilson.ClubVelo;
-
-import java.util.*;
-
-public class Calendrier {
-	private List<Balade> cal;
-}

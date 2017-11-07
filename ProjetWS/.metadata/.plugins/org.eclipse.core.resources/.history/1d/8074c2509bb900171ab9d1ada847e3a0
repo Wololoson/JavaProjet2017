@@ -1,9 +1,0 @@
-package be.wilson.ClubVelo;
-
-import java.io.Serializable;
-
-public abstract class Personne  implements Serializable {
-	private static final long serialVersionUID = -3480279736443429062L;
-	private int id;
-	private String nom;
-}

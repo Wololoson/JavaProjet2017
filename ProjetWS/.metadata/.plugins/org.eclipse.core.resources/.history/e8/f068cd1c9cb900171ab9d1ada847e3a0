@@ -1,8 +1,0 @@
-package be.wilson.ClubVelo;
-
-import java.io.Serializable;
-
-public class Tresorier extends Personne {
-	private static final long serialVersionUID = 9048267652525965325L;
-	
-}
