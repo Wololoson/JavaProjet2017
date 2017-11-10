@@ -37,6 +37,7 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.executeUpdate();
 			
 			obj.setId(idPers);
+			super.close(stmt);
 			return true;
 		}
 		catch(SQLException e){
@@ -54,6 +55,7 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.executeUpdate();
 			
 			generatedId = stmt.getGeneratedKeys().getInt(1);
+			super.close(stmt);
 
 			return true;
 		}
@@ -85,6 +87,7 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.setLong(1, idPers);
 			stmt.setFloat(2, obj.getCotisation());
 			stmt.executeUpdate();
+			super.close(stmt);
 			
 			return true;
 		}
@@ -104,6 +107,7 @@ public class MembreDAO extends DAO<Membre>{
 			if(resultPers.first()){
 				membre = new Membre(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"));
 			}
+			super.close(resultPers);
 		}
 		catch(SQLException e){
 			e.printStackTrace();

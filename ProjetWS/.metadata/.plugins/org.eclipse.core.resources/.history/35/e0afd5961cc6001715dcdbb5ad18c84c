@@ -1,0 +1,55 @@
+package be.wilson.ClubVeloPOJO;
+
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+
+public class Balade implements Serializable {
+	private static final long serialVersionUID = 2249723182500190742L;
+	private int id;
+	private String libelle;
+	private Adresse adr;
+	private Date date;
+	private float fraisDepla;
+	private List<Voiture> listVoit;
+	
+	public Balade() { }
+	public Balade(int id, String libelle, Adresse adr, Date date, float fraisDepla) {
+		this.id = id;
+		this.libelle = libelle;
+		this.adr = adr;
+		this.date = date;
+		this.fraisDepla = fraisDepla;
+		listVoit = new ArrayList<>();
+	}
+	public float getFraisDepla() {
+		return fraisDepla;
+	}
+	public void setFraisDepla(float fraisDepla) {
+		this.fraisDepla = fraisDepla;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getLibelle() {
+		return libelle;
+	}
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+	public Adresse getAdr() {
+		return adr;
+	}
+	public void setAdr(Adresse adr) {
+		this.adr = adr;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+}

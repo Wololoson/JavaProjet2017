@@ -9,12 +9,25 @@ public class Voiture implements Serializable {
 	private List<Membre> passagers;
 	private ListIterator<Membre> iter;
 	private String numImmat;
-	public Voiture(Membre chauffeur, String numImmat) {
+	private int nbPlaces;
+	
+	public Voiture(){}
+	
+	public Voiture(String numImmat, Membre chauffeur,  int nbPlaces) {
 		this.chauffeur = chauffeur;
 		passagers = new ArrayList<>();
 		iter = passagers.listIterator();
 		this.numImmat = numImmat;
+		this.nbPlaces = nbPlaces;
 	}
+	public int getNbPlaces() {
+		return nbPlaces;
+	}
+
+	public void setNbPlaces(int nbPlaces) {
+		this.nbPlaces = nbPlaces;
+	}
+
 	public Membre getChauffeur() {
 		return chauffeur;
 	}

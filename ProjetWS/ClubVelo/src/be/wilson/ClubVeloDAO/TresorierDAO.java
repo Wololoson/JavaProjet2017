@@ -1,5 +1,124 @@
 package be.wilson.ClubVeloDAO;
 
-public class TresorierDAO {
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import be.wilson.ClubVeloPOJO.Tresorier;
+
+public class TresorierDAO extends DAO<Tresorier> {
+	AdresseDAO adrDAO = new AdresseDAO(connect);
+	private long generatedId;
+	
+	public TresorierDAO(Connection conn){
+		super(conn);
+		generatedId = 0;
+	}
+	
+	public boolean create(Tresorier obj){
+		PreparedStatement stmt = null;
+		long idPers = 0;
+		long idAdr = 0;
+		try{
+			adrDAO.create(obj.getAdr());
+			idAdr = adrDAO.getGeneratedId();
+			
+			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr)"
+										  + "VALUES(?, ?, ?, ?)");
+			stmt.setString(1, obj.getNom());
+			stmt.setString(2, obj.getPrenom());
+			stmt.setDate(3, obj.getDateNaiss());
+			stmt.setLong(4, idAdr);
+			stmt.executeUpdate();
+			
+			idPers = stmt.getGeneratedKeys().getLong(1);
+			stmt = connect.prepareStatement("INSERT INTO Tresorier(idPers, code)"
+					  					  + "VALUES(?, ?)");
+			stmt.setLong(1, idPers);
+			stmt.setString(2, obj.getCode());
+			stmt.executeUpdate();
+			
+			obj.setId(idPers);
+			super.close(stmt);
+			return true;
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean delete(Tresorier obj){
+		PreparedStatement stmt = null;
+		try{
+			stmt = connect.prepareStatement("DELETE FROM Tresorier"
+					  					  + "WHERE idPers = ?");
+			stmt.setLong(1, obj.getId());
+			stmt.executeUpdate();
+			
+			generatedId = stmt.getGeneratedKeys().getInt(1);
+			super.close(stmt);
+
+			return true;
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public boolean update(Tresorier obj){
+		PreparedStatement stmt = null;
+		long idPers = 0;
+		long idAdr = 0;
+		try{
+			adrDAO.update(obj.getAdr());
+			idAdr = adrDAO.getGeneratedId();
+			
+			stmt = connect.prepareStatement("UPDATE Personne"
+										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?");
+			stmt.setString(1, obj.getNom());
+			stmt.setString(2, obj.getPrenom());
+			stmt.setDate(3, obj.getDateNaiss());
+			stmt.setLong(4, idAdr);
+			stmt.executeUpdate();
+			
+			idPers = stmt.getGeneratedKeys().getLong(1);
+			stmt = connect.prepareStatement("UPDATE Tresorier"
+					  					  + "SET idPers = ?, code = ?");
+			stmt.setLong(1, idPers);
+			stmt.setString(2, obj.getCode());
+			stmt.executeUpdate();
+			super.close(stmt);
+			
+			return true;
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public Tresorier find(int id){
+		Tresorier tres = new Tresorier();
+		try{
+			ResultSet resultPers = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
+														   + "INNER JOIN Membre WHERE ipPers = " + id);
+			if(resultPers.first()){
+				tres = new Tresorier(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getString("code"));
+			}
+			super.close(resultPers);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return tres;
+	}
+	
+	public long getGeneratedId(){
+		return generatedId;
+	}
 }

@@ -9,4 +9,8 @@
 <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
+<fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Responsable"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Tresorier"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Balade"/>
 </qualifiedTypeNameHistroy>

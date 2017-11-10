@@ -15,7 +15,7 @@ public class AdresseDAO extends DAO<Adresse> {
 		generatedId = 0;
 	}
 	
-	public boolean create(Adresse obj){
+	public boolean create(Adresse obj) {
 		PreparedStatement stmt = null;
 		try{
 			stmt = connect.prepareStatement("INSERT INTO Adresse(rue, numero, codePost, ville, pays)"
@@ -28,7 +28,8 @@ public class AdresseDAO extends DAO<Adresse> {
 			stmt.executeUpdate();
 			
 			generatedId = stmt.getGeneratedKeys().getInt(1);
-			
+
+			super.close(stmt);
 			return true;
 		}
 		catch(SQLException e){
@@ -47,6 +48,7 @@ public class AdresseDAO extends DAO<Adresse> {
 			
 			generatedId = stmt.getGeneratedKeys().getInt(1);
 
+			super.close(stmt);
 			return true;
 		}
 		catch(SQLException e){
@@ -68,6 +70,7 @@ public class AdresseDAO extends DAO<Adresse> {
 			stmt.executeUpdate();
 			
 			generatedId = stmt.getGeneratedKeys().getInt(1);
+			super.close(stmt);
 			
 			return true;
 		}
@@ -87,6 +90,8 @@ public class AdresseDAO extends DAO<Adresse> {
 			if(result.first()){
 				adr = new Adresse(id, result.getString("rue"), result.getInt("numero"), result.getString("codePost"), result.getString("ville"), result.getString("pays"));
 			}
+			
+			super.close(result);
 		}
 		catch(SQLException e){
 			e.printStackTrace();

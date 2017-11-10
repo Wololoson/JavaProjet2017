@@ -1,0 +1,17 @@
+package be.wilson.ClubVeloDAO;
+
+public class ExceptionConfigurationDAO extends RuntimeException {
+	private static final long serialVersionUID = 7902776887027788033L;
+
+	public ExceptionConfigurationDAO( String message ) {
+        super( message );
+    }
+
+    public ExceptionConfigurationDAO( String message, Throwable cause ) {
+        super( message, cause );
+    }
+
+    public ExceptionConfigurationDAO( Throwable cause ) {
+        super( cause );
+    }
+}

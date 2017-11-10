@@ -4,10 +4,12 @@ public class VTT extends Categorie{
 	private static final long serialVersionUID = -2406134306951908985L;
 	private TypeVTT type;
 	
-	public VTT(int id, int nbMembres, TypeVTT type) {
-		super(id, nbMembres);
+	public VTT(int id, int nbMembres, Responsable resp, TypeVTT type) {
+		super(id, nbMembres, resp);
 		this.type = type;
 	}
+	
+	public VTT(){}
 
 	public TypeVTT getType() {
 		return type;

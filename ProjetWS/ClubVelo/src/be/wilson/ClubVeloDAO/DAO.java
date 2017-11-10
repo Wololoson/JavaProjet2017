@@ -1,6 +1,6 @@
 package be.wilson.ClubVeloDAO;
 
-import java.sql.Connection;
+import java.sql.*;
 
 public abstract class DAO<T> {
 	protected Connection connect = null;
@@ -16,5 +16,25 @@ public abstract class DAO<T> {
 	public abstract boolean update(T obj);
 	
 	public abstract T find(int id);
+	
+	public void close(PreparedStatement stmt){
+		try {
+			if(stmt != null)
+				stmt.close();
+		} 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void close(ResultSet res){
+		try {
+			if(res != null)
+				res.close();
+		} 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 }
 

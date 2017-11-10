@@ -1,0 +1,29 @@
+package be.wilson.ClubVeloPOJO;
+
+public class VTT extends Categorie{
+	private static final long serialVersionUID = -2406134306951908985L;
+	private TypeVTT type;
+	private Personne resp;
+	
+	public VTT(int id, int nbMembres, TypeVTT type, Responsable resp) {
+		super(id, nbMembres);
+		this.type = type;
+		this.resp = resp;
+	}
+
+	public Personne getResp() {
+		return resp;
+	}
+
+	public void setResp(Personne resp) {
+		this.resp = resp;
+	}
+
+	public TypeVTT getType() {
+		return type;
+	}
+
+	public void setType(TypeVTT type) {
+		this.type = type;
+	}
+}

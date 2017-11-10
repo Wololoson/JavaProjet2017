@@ -4,9 +4,11 @@ import java.util.*;
 
 public class Calendrier {
 	private List<Balade> cal;
+	private ListIterator iter;
 
-	public Calendrier(List<Balade> cal) {
-		this.cal = null;
+	public Calendrier() {
+		this.cal = new ArrayList<>();
+		iter = cal.listIterator();
 	}
 
 	public List<Balade> getCal() {

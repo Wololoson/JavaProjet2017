@@ -1,0 +1,18 @@
+package be.wilson.ClubVeloDAO;
+
+public class ConfigurationExceptionDAO extends RuntimeException {
+    /*
+     * Constructeurs
+     */
+    public ConfigurationExceptionDAO( String message ) {
+        super( message );
+    }
+
+    public ConfigurationExceptionDAO( String message, Throwable cause ) {
+        super( message, cause );
+    }
+
+    public ConfigurationExceptionDAO( Throwable cause ) {
+        super( cause );
+    }
+}
