@@ -6,8 +6,8 @@ public class Tresorier extends Personne {
 	private static final long serialVersionUID = 9048267652525965325L;
 	private String code;
 	
-	public Tresorier(int id, String nom, String prenom, Date dateNaiss, Adresse adr, String code) {
-		super(id, nom, prenom, dateNaiss, adr);
+	public Tresorier(int id, String nom, String prenom, Date dateNaiss, Adresse adr, String code, String motDePasse) {
+		super(id, nom, prenom, dateNaiss, adr, motDePasse);
 		this.code = code;
 	}
 	
@@ -19,5 +19,10 @@ public class Tresorier extends Personne {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	public void modifierInfosPerso(Tresorier t) {
+		super.modifierInfosPerso(t);
+		this.code = t.code;
 	}
 }

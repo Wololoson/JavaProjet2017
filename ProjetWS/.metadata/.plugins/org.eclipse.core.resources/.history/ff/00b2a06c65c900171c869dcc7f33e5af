@@ -1,0 +1,42 @@
+package be.wilson.ClubVeloUI;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class Panneau extends JPanel {
+	private static final long serialVersionUID = 2510474506775005042L;
+	private String fontName;
+	private int fontStrength;
+	private int fontSize;
+	private Color fontColor;
+	private String text;
+	private int x, y;
+	
+	public Panneau(String fontName, int fontStrength, int fontSize, Color fontColor, String text, int x, int y) {
+		setBackground(Color.DARK_GRAY);
+		this.fontName = fontName;
+		this.fontStrength = fontStrength;
+		this.fontSize = fontSize;
+		this.fontColor = fontColor;
+		this.text = text;
+		this.x = x;
+		this.y = y;
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		Font font = new Font(fontName, fontStrength, fontSize);
+	    g.setFont(font);
+	    g.setColor(fontColor);          
+	    g.drawString(text, y, x);
+	}
+	
+	public void creerBouton(String text, int width, int height) {
+		super.add(new JButton(text));
+	}
+}

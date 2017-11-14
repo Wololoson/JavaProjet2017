@@ -69,4 +69,13 @@ public class Adresse implements Serializable {
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
+	
+	public void modifierAdresse(Adresse a) {
+		this.id = a.id;
+		this.rue = a.rue;
+		this.num = a.num;
+		this.ville = a.ville;
+		this.codePost = a.codePost;
+		this.pays = a.pays;
+	}
 }

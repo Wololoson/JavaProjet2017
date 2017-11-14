@@ -7,7 +7,6 @@ public class Voiture implements Serializable {
 	private static final long serialVersionUID = 8173001894596959567L;
 	private Membre chauffeur;
 	private List<Membre> passagers;
-	private ListIterator<Membre> iter;
 	private String numImmat;
 	private int nbPlaces;
 	
@@ -16,7 +15,6 @@ public class Voiture implements Serializable {
 	public Voiture(String numImmat, Membre chauffeur,  int nbPlaces) {
 		this.chauffeur = chauffeur;
 		passagers = new ArrayList<>();
-		iter = passagers.listIterator();
 		this.numImmat = numImmat;
 		this.nbPlaces = nbPlaces;
 	}

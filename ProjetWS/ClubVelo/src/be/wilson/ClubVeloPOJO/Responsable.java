@@ -6,8 +6,8 @@ public class Responsable extends Personne {
 	private static final long serialVersionUID = 2364367160201498393L;
 	private Date dateExp;
 	
-	public Responsable(int id, String nom, String prenom, Date dateNaiss, Adresse adr, Date dateExp) {
-		super(id, nom, prenom, dateNaiss, adr);
+	public Responsable(int id, String nom, String prenom, Date dateNaiss, Adresse adr, Date dateExp, String motDePasse) {
+		super(id, nom, prenom, dateNaiss, adr, motDePasse);
 		this.dateExp = dateExp;
 	}
 	
@@ -19,5 +19,10 @@ public class Responsable extends Personne {
 
 	public void setDateExp(Date dateExp) {
 		this.dateExp = dateExp;
+	}
+	
+	public void modifierInfosPerso(Responsable r) {
+		super.modifierInfosPerso(r);
+		this.dateExp = r.dateExp;
 	}
 }

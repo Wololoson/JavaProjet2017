@@ -1,0 +1,45 @@
+import java.sql.Connection;
+import be.wilson.ClubVeloConnection.DBConnection;
+import be.wilson.ClubVeloDAO.*;
+import be.wilson.ClubVeloPOJO.*;
+
+public class DAOFactory extends AbstractDAOFactory {
+	protected static final Connection connec = DBConnection.getInstance();
+	
+	public DAO<Membre> getMembreDAO() {
+		return new MembreDAO(connec);
+	}
+
+	public DAO<Responsable> getResponsableDAO() {
+		return null;
+	}
+
+	public DAO<Tresorier> getTresorierDAO() {
+		return null;
+	}
+
+	public DAO<Voiture> getVoitureDAO() {
+		return null;
+	}
+
+	public DAO<Adresse> getAdresseDAO() {
+		return null;
+	}
+
+	public DAO<VTT> getVTTDAO() {
+		return null;
+	}
+
+	public DAO<Cyclo> getCycloDAO() {
+		return null;
+	}
+
+	public DAO<Categorie> getCategorieDAO() {
+		return null;
+	}
+
+	public DAO<Balade> getBaladeDAO() {
+		return null;
+	}
+
+}

@@ -8,4 +8,20 @@ public class Cyclo extends Categorie {
 	}
 	
 	public Cyclo(){}
+	
+	public void AjouterMembre(Membre m) {
+		if(!listeMembres.contains(m))
+			listeMembres.add(m);
+	}
+
+	public void SupprimerMembre(Membre m) {
+		listeMembres.remove(m);
+	}
+	
+	public boolean equals(Membre m){
+		if(this.getId() == m.getId())
+			return true;
+		else
+			return false;
+	}
 }

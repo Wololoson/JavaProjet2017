@@ -5,18 +5,20 @@ import java.sql.Date;
 
 public abstract class Personne  implements Serializable {
 	private static final long serialVersionUID = -3480279736443429062L;
-	private long id;
-	private String nom;
-	private String prenom;
-	private Date dateNaiss;
-	private Adresse adr;
-	
-	public Personne(long id, String nom, String prenom, Date dateNaiss, Adresse adr) {
+	protected long id;
+	protected String nom;
+	protected String prenom;
+	protected Date dateNaiss;
+	protected Adresse adr;
+	protected String motDePasse;
+
+	public Personne(long id, String nom, String prenom, Date dateNaiss, Adresse adr, String motDePasse) {
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaiss = dateNaiss;
 		this.adr = adr;
+		this.motDePasse = motDePasse;
 	}
 	
 	public Personne(){}
@@ -59,5 +61,21 @@ public abstract class Personne  implements Serializable {
 	
 	public void setAdr(Adresse adr){
 		this.adr = adr;
+	}
+	
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+	
+	public void modifierInfosPerso(Personne p) {
+		this.id = p.id;
+		this.nom = p.nom;
+		this.prenom = p.prenom;
+		this.dateNaiss = p.dateNaiss;
+		this.adr = p.adr;
 	}
 }

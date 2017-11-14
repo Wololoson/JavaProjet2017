@@ -12,7 +12,6 @@ public class Balade implements Serializable {
 	private Date date;
 	private float fraisDepla;
 	private List<Voiture> listVoit;
-	private ListIterator<Voiture> iter;
 	private Categorie cat;
 	
 	public Balade() { }
@@ -23,7 +22,6 @@ public class Balade implements Serializable {
 		this.date = date;
 		this.fraisDepla = fraisDepla;
 		listVoit = new ArrayList<>();
-		iter = listVoit.listIterator();
 		this.cat = cat;
 	}
 	public Categorie getCat() {
@@ -76,5 +74,20 @@ public class Balade implements Serializable {
 	
 	public void removeVoiture(Voiture b){
 		listVoit.remove(b);
+	}
+	
+	public void modifierBalade(Balade b) {
+		this.id = b.id;
+		this.libelle = b.libelle;
+		this.adr = b.adr;
+		this.date = b.date;
+		this.fraisDepla = b.fraisDepla;
+	}
+	
+	public boolean equals(Balade b){
+		if(this.getId() == b.getId())
+			return true;
+		else
+			return false;
 	}
 }

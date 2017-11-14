@@ -1,8 +1,11 @@
 package be.wilson.ClubVeloDAO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import be.wilson.ClubVeloPOJO.Membre;
+import be.wilson.ClubVeloPOJO.Responsable;
 
 public class MembreDAO extends DAO<Membre>{
 	AdresseDAO adrDAO = new AdresseDAO(connect);
@@ -21,12 +24,13 @@ public class MembreDAO extends DAO<Membre>{
 			adrDAO.create(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr)"
-										  + "VALUES(?, ?, ?, ?)");
+			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse)"
+										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
 			stmt.setDate(3, obj.getDateNaiss());
 			stmt.setLong(4, idAdr);
+			stmt.setString(5, obj.getMotDePasse());
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
@@ -74,11 +78,12 @@ public class MembreDAO extends DAO<Membre>{
 			idAdr = adrDAO.getGeneratedId();
 			
 			stmt = connect.prepareStatement("UPDATE Personne"
-										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?");
+										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ?");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
 			stmt.setDate(3, obj.getDateNaiss());
 			stmt.setLong(4, idAdr);
+			stmt.setString(5, obj.getMotDePasse());
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
@@ -105,7 +110,7 @@ public class MembreDAO extends DAO<Membre>{
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
 														   + "INNER JOIN Membre WHERE ipPers = " + id);
 			if(resultPers.first()){
-				membre = new Membre(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"));
+				membre = new Membre(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse"));
 			}
 			super.close(resultPers);
 		}
@@ -114,6 +119,25 @@ public class MembreDAO extends DAO<Membre>{
 		}
 		return membre;
 	}
+	
+	public List<Membre> findAll(){
+		List<Membre> tres = new ArrayList<Membre>();
+		try{
+			ResultSet resultPers = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
+														   + "INNER JOIN Membre ORDER BY nom ASC");
+			while(resultPers.next()){
+				tres.add(new Membre(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse")));
+			}
+			super.close(resultPers);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return tres;
+	}
+	
 	
 	public long getGeneratedId(){
 		return generatedId;

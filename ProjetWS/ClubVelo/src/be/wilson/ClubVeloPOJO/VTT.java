@@ -18,4 +18,20 @@ public class VTT extends Categorie{
 	public void setType(TypeVTT type) {
 		this.type = type;
 	}
+
+	public void AjouterMembre(Membre m) {
+		if(!listeMembres.contains(m))
+			listeMembres.add(m);
+	}
+
+	public void SupprimerMembre(Membre m) {
+		listeMembres.remove(m);
+	}
+	
+	public boolean equals(Membre m){
+		if(this.getId() == m.getId())
+			return true;
+		else
+			return false;
+	}
 }

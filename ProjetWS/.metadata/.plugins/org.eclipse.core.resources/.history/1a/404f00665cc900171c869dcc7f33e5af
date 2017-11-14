@@ -1,0 +1,14 @@
+package be.wilson.ClubVeloUI;
+
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+public class Panneau extends JPanel {
+	public Panneau(Color couleur) {
+		JPanel pan = new JPanel();
+		pan.setBackground(couleur);
+	}
+	
+	
+}

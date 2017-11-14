@@ -6,8 +6,8 @@ public class Membre extends Personne{
 	private static final long serialVersionUID = 4199324936270699959L;
 	private float cotisation;
 	
-	public Membre(int id, String nom, String prenom, Date dateNaiss, Adresse adr, float cotisation) {
-		super(id, nom, prenom, dateNaiss, adr);
+	public Membre(int id, String nom, String prenom, Date dateNaiss, Adresse adr, float cotisation, String motDePasse) {
+		super(id, nom, prenom, dateNaiss, adr, motDePasse);
 		this.cotisation = cotisation;
 	}
 	
@@ -19,5 +19,10 @@ public class Membre extends Personne{
 
 	public void setCotisation(float cotisation) {
 		this.cotisation = cotisation;
+	}
+
+	public void modifierInfosPerso(Membre m) {
+		super.modifierInfosPerso(m);
+		this.cotisation = m.cotisation;
 	}
 }

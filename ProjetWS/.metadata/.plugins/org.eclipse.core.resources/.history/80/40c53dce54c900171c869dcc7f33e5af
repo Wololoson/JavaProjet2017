@@ -1,0 +1,69 @@
+import be.wilson.ClubVeloDAO.DAO;
+import be.wilson.ClubVeloPOJO.Adresse;
+import be.wilson.ClubVeloPOJO.Balade;
+import be.wilson.ClubVeloPOJO.Categorie;
+import be.wilson.ClubVeloPOJO.Cyclo;
+import be.wilson.ClubVeloPOJO.Membre;
+import be.wilson.ClubVeloPOJO.Responsable;
+import be.wilson.ClubVeloPOJO.Tresorier;
+import be.wilson.ClubVeloPOJO.VTT;
+import be.wilson.ClubVeloPOJO.Voiture;
+
+public class DAOFactory extends AbstractDAOFactory {
+	protected static final DBConnection connec = new DBConnection();
+	
+	@Override
+	public DAO<Membre> getMembreDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Responsable> getResponsableDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Tresorier> getTresorierDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Voiture> getVoitureDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Adresse> getAdresseDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<VTT> getVTTDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Cyclo> getCycloDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Categorie> getCategorieDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DAO<Balade> getBaladeDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
