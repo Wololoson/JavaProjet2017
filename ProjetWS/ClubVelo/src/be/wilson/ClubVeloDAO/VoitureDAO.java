@@ -21,7 +21,7 @@ public class VoitureDAO extends DAO<Voiture> {
 	public boolean create(Voiture obj) {
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("INSERT INTO Voiture(numImmat, nbPlaces, idPers)"
+			stmt = connect.prepareStatement("INSERT INTO Voiture(numImmat, nbPlaces, idPers) "
 										  + "VALUES(?, ?, ?)");
 			stmt.setString(1, obj.getNumImmat());
 			stmt.setInt(2, obj.getNbPlaces());
@@ -42,7 +42,7 @@ public class VoitureDAO extends DAO<Voiture> {
 	public boolean delete(Voiture obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Voiture"
+			stmt = connect.prepareStatement("DELETE FROM Voiture "
 					  					  + "WHERE numImmat = ?");
 			stmt.setString(1, obj.getNumImmat());
 			stmt.executeUpdate();
@@ -61,7 +61,7 @@ public class VoitureDAO extends DAO<Voiture> {
 	public boolean update(Voiture obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("UPDATE Voiture"
+			stmt = connect.prepareStatement("UPDATE Voiture "
 								  		  + "SET numImmat = ?, nbPlaces = ?, idPers = ?");
 			stmt.setString(1, obj.getNumImmat());
 			stmt.setInt(2, obj.getNbPlaces());
@@ -85,7 +85,7 @@ public class VoitureDAO extends DAO<Voiture> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture "
 														   + "WHERE numImmat = " + numImmat);
 			
 			voit = new Voiture(numImmat, mbrDAO.find(result.getInt("idPers")), result.getInt("nbPlaces"));

@@ -27,7 +27,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 			adrDAO.create(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse)"
+			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -37,7 +37,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("INSERT INTO Tresorier(idPers, code)"
+			stmt = connect.prepareStatement("INSERT INTO Tresorier(idPers, code) "
 					  					  + "VALUES(?, ?)");
 			stmt.setLong(1, idPers);
 			stmt.setString(2, obj.getCode());
@@ -56,7 +56,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 	public boolean delete(Tresorier obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Tresorier"
+			stmt = connect.prepareStatement("DELETE FROM Tresorier "
 					  					  + "WHERE idPers = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -80,7 +80,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 			adrDAO.update(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("UPDATE Personne"
+			stmt = connect.prepareStatement("UPDATE Personne "
 										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ?");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -90,7 +90,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("UPDATE Tresorier"
+			stmt = connect.prepareStatement("UPDATE Tresorier "
 					  					  + "SET idPers = ?, code = ?");
 			stmt.setLong(1, idPers);
 			stmt.setString(2, obj.getCode());
@@ -110,7 +110,7 @@ public class TresorierDAO extends DAO<Tresorier> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
 														   + "INNER JOIN Tresorier WHERE ipPers = " + id);
 			if(resultPers.first()){
 				tres = new Tresorier(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getString("code"), resultPers.getString("motDePasse"));
@@ -128,8 +128,8 @@ public class TresorierDAO extends DAO<Tresorier> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
-														   + "INNER JOIN Tresorier ORDER BY nom ASC");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Tresorier T ON P.idPers = T.idPers ORDER BY nom ASC");
 			while(resultPers.next()){
 				tres.add(new Tresorier(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getString("code"), resultPers.getString("motDePasse")));
 			}

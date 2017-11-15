@@ -27,7 +27,7 @@ private long generatedId;
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT type FROM Categorie"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT type FROM Categorie "
 														   + "WHERE idAdr = " + id);
 			switch(result.getString("type")){
 			case "VTT":

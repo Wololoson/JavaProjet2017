@@ -21,7 +21,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	public boolean create(Adresse obj) {
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("INSERT INTO Adresse(rue, numero, codePost, ville, pays)"
+			stmt = connect.prepareStatement("INSERT INTO Adresse(rue, numero, codePost, ville, pays) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getRue());
 			stmt.setInt(2, obj.getNum());
@@ -44,7 +44,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	public boolean delete(Adresse obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Adresse"
+			stmt = connect.prepareStatement("DELETE FROM Adresse "
 					  					  + "WHERE idAdr = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -63,7 +63,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	public boolean update(Adresse obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("UPDATE Adresse"
+			stmt = connect.prepareStatement("UPDATE Adresse "
 								  		  + "SET rue = ?, numero = ?, codePost = ?, ville = ?, pays = ?");
 			stmt.setString(1, obj.getRue());
 			stmt.setInt(2, obj.getNum());
@@ -88,7 +88,7 @@ public class AdresseDAO extends DAO<Adresse> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Adresse"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Adresse "
 														   + "WHERE idAdr = " + id);
 			if(result.first()){
 				adr = new Adresse(id, result.getString("rue"), result.getInt("numero"), result.getString("codePost"), result.getString("ville"), result.getString("pays"));

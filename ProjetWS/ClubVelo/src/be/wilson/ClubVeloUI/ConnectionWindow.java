@@ -12,13 +12,13 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 
 import be.wilson.ClubVeloConnection.DBConnection;
 import be.wilson.ClubVeloPOJO.*;
 import be.wilson.ClubVeloDAO.*;
 
 public class ConnectionWindow {
-	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) {
 		//Connexion à la DB
 		Connection conn = DBConnection.getInstance();
@@ -30,15 +30,15 @@ public class ConnectionWindow {
 		DAO<Tresorier> tresorierDAO = new TresorierDAO(conn);
 		
 		for(Membre m : membreDAO.findAll()) {
-			membres.add(m.getNom() + " " + m.getPrenom());
+			membres.add(m.getNom().toUpperCase() + " " + m.getPrenom());
 		}
 		
 		for(Responsable r : responsableDAO.findAll()) {
-			membres.add(r.getNom() + " " + r.getPrenom());
+			membres.add(r.getNom().toUpperCase() + " " + r.getPrenom());
 		}
 		
 		for(Tresorier t : tresorierDAO.findAll()) {
-			membres.add(t.getNom() + " " + t.getPrenom());
+			membres.add(t.getNom().toUpperCase() + " " + t.getPrenom());
 		}
 		
 		//Création du JPanel principal
@@ -55,16 +55,28 @@ public class ConnectionWindow {
 		
 		//Création du JPanel de l'option Nom
 		Panneau namePan = new Panneau();
-		JLabel name = new JLabel("Nom : ");
+		JLabel name = new JLabel("Nom :                 ");
+		name.setForeground(Color.WHITE);
 		namePan.add(name);
 		JComboBox<String> nameCombo = new JComboBox<>();
 		
 		for(int i = 0; i < membres.size(); i++)			//Remplissage de la ComboBox
 			nameCombo.addItem(membres.get(i));
 		
-		nameCombo.setPreferredSize(new Dimension(100, 20));
+		nameCombo.setPreferredSize(new Dimension(170, 20));
 		namePan.add(nameCombo);
 		mainPan.add(namePan);
+		
+		//Création de l'input du Password
+		Panneau pwdPan = new Panneau();
+		JLabel pwd = new JLabel("Mot de passe : ");
+		pwd.setForeground(Color.WHITE);
+		pwdPan.add(pwd);
+		
+		JPasswordField pwdFld = new JPasswordField();
+		pwdFld.setPreferredSize(new Dimension(170, 20));
+		pwdPan.add(pwdFld);
+		mainPan.add(pwdPan);
 		
 		//Création du JPanel du bouton de connexion
 		Panneau connButPan = new Panneau();

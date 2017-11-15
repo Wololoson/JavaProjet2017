@@ -24,7 +24,7 @@ public class MembreDAO extends DAO<Membre>{
 			adrDAO.create(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse)"
+			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -34,7 +34,7 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("INSERT INTO Membre(idPers, cotisation)"
+			stmt = connect.prepareStatement("INSERT INTO Membre(idPers, cotisation) "
 					  					  + "VALUES(?, ?)");
 			stmt.setLong(1, idPers);
 			stmt.setFloat(2, obj.getCotisation());
@@ -53,7 +53,7 @@ public class MembreDAO extends DAO<Membre>{
 	public boolean delete(Membre obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Personne"
+			stmt = connect.prepareStatement("DELETE FROM Personne "
 					  					  + "WHERE idPers = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -77,7 +77,7 @@ public class MembreDAO extends DAO<Membre>{
 			adrDAO.update(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("UPDATE Personne"
+			stmt = connect.prepareStatement("UPDATE Personne "
 										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ?");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -87,7 +87,7 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("UPDATE Membre"
+			stmt = connect.prepareStatement("UPDATE Membre "
 					  					  + "SET idPers = ?, cotisation = ?");
 			stmt.setLong(1, idPers);
 			stmt.setFloat(2, obj.getCotisation());
@@ -107,7 +107,7 @@ public class MembreDAO extends DAO<Membre>{
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
 														   + "INNER JOIN Membre WHERE ipPers = " + id);
 			if(resultPers.first()){
 				membre = new Membre(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse"));
@@ -125,8 +125,8 @@ public class MembreDAO extends DAO<Membre>{
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
-														   + "INNER JOIN Membre ORDER BY nom ASC");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Membre M ON P.idPers = M.idPers ORDER BY nom ASC");
 			while(resultPers.next()){
 				tres.add(new Membre(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse")));
 			}

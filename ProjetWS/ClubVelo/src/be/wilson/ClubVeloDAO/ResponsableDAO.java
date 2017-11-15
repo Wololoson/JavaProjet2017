@@ -27,7 +27,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 			adrDAO.create(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse)"
+			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -37,7 +37,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("INSERT INTO Responsable(idPers, dateExp)"
+			stmt = connect.prepareStatement("INSERT INTO Responsable(idPers, dateExp) "
 					  					  + "VALUES(?, ?)");
 			stmt.setLong(1, idPers);
 			stmt.setDate(2, obj.getDateExp());
@@ -56,7 +56,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 	public boolean delete(Responsable obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Personne"
+			stmt = connect.prepareStatement("DELETE FROM Personne "
 					  					  + "WHERE idPers = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -80,7 +80,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 			adrDAO.update(obj.getAdr());
 			idAdr = adrDAO.getGeneratedId();
 			
-			stmt = connect.prepareStatement("UPDATE Personne"
+			stmt = connect.prepareStatement("UPDATE Personne "
 										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ?");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
@@ -90,7 +90,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 			stmt.executeUpdate();
 			
 			idPers = stmt.getGeneratedKeys().getLong(1);
-			stmt = connect.prepareStatement("UPDATE Responsable"
+			stmt = connect.prepareStatement("UPDATE Responsable "
 					  					  + "SET idPers = ?, dateExp = ?");
 			stmt.setLong(1, idPers);
 			stmt.setDate(2, obj.getDateExp());
@@ -110,7 +110,7 @@ public class ResponsableDAO extends DAO<Responsable> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
 														   + "INNER JOIN Responsable WHERE ipPers = " + id);
 			if(resultPers.first()){
 				resp = new Responsable(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getDate("dateExp"), resultPers.getString("motDePasse"));
@@ -128,8 +128,8 @@ public class ResponsableDAO extends DAO<Responsable> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne"
-														   + "INNER JOIN Responsable ORDER BY nom ASC");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Responsable R ON P.idPers = R.idPers ORDER BY nom ASC");
 			while(resultPers.next()){
 				tres.add(new Responsable(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getDate("dateExp"), resultPers.getString("motDePasse")));
 			}

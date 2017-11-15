@@ -22,7 +22,7 @@ private long generatedId;
 	public boolean create(Cyclo obj) {
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("INSERT INTO Categorie(nbMembres, type, sousType, idPers)"
+			stmt = connect.prepareStatement("INSERT INTO Categorie(nbMembres, type, sousType, idPers) "
 										  + "VALUES(?, ?, ?, ?)");
 			stmt.setInt(1, obj.getNbMembres());
 			stmt.setString(2, "Cyclo");
@@ -44,7 +44,7 @@ private long generatedId;
 	public boolean delete(Cyclo obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Categorie"
+			stmt = connect.prepareStatement("DELETE FROM Categorie "
 					  					  + "WHERE idCat = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -63,7 +63,7 @@ private long generatedId;
 	public boolean update(Cyclo obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("UPDATE Categorie"
+			stmt = connect.prepareStatement("UPDATE Categorie "
 								  		  + "SET nbMembres = ?, type = ?, sousType = ?, idPers = ?");
 			stmt.setInt(1, obj.getNbMembres());
 			stmt.setString(2, "Cyclo");
@@ -88,7 +88,7 @@ private long generatedId;
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie "
 														   + "WHERE idAdr = " + id);
 			if(result.first()){
 				cyc = new Cyclo(id, result.getInt("nbMembres"), respDAO.find(result.getInt("idPers")));

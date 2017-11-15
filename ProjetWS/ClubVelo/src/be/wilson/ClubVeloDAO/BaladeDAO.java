@@ -21,7 +21,7 @@ public class BaladeDAO extends DAO<Balade> {
 	public boolean create(Balade obj) {
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("INSERT INTO Balade(libelleBal, dateBal, fraisDepla, idAdr, idCat)"
+			stmt = connect.prepareStatement("INSERT INTO Balade(libelleBal, dateBal, fraisDepla, idAdr, idCat) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getLibelle());
 			stmt.setDate(2, obj.getDate());
@@ -44,7 +44,7 @@ public class BaladeDAO extends DAO<Balade> {
 	public boolean delete(Balade obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("DELETE FROM Balade"
+			stmt = connect.prepareStatement("DELETE FROM Balade "
 					  					  + "WHERE idBal = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
@@ -63,7 +63,7 @@ public class BaladeDAO extends DAO<Balade> {
 	public boolean update(Balade obj){
 		PreparedStatement stmt = null;
 		try{
-			stmt = connect.prepareStatement("UPDATE Balade"
+			stmt = connect.prepareStatement("UPDATE Balade "
 								  		  + "SET libelleBal = ?, dateBal = ?, fraisDepla = ?, idAdr = ?, idCat = ?");
 			stmt.setString(1, obj.getLibelle());
 			stmt.setDate(2, obj.getDate());
@@ -90,7 +90,7 @@ public class BaladeDAO extends DAO<Balade> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade"
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade "
 														   + "WHERE idBal = " + id);
 			
 			bal = new Balade(id, result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat")));
