@@ -78,4 +78,8 @@ public abstract class Personne  implements Serializable {
 		this.dateNaiss = p.dateNaiss;
 		this.adr = p.adr;
 	}
+	
+	public String toString() {
+		return String.format(nom.toUpperCase() + " " + prenom);
+	}
 }
