@@ -109,7 +109,7 @@ public class BaladeDAO extends DAO<Balade> {
 
 	@Override
 	public List<Balade> findAll() {
-		List<Balade> tres = new ArrayList<Balade>();
+		List<Voiture> tres = new ArrayList<Voiture>();
 		AdresseDAO adrDAO = new AdresseDAO(connect);
 		CategorieDAO catDAO = new CategorieDAO(connect);
 		try{
@@ -117,7 +117,7 @@ public class BaladeDAO extends DAO<Balade> {
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
 			while(result.next()){
-				tres.add(new Balade(result.getInt("idBal"), result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
+				tres.add(new Balade(id, result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
 			}
 			super.close(result);
 		}

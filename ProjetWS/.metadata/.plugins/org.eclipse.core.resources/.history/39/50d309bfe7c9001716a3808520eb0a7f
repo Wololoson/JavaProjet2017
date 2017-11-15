@@ -110,13 +110,12 @@ public class VoitureDAO extends DAO<Voiture> {
 	@Override
 	public List<Voiture> findAll() {
 		List<Voiture> tres = new ArrayList<Voiture>();
-		MembreDAO mbrDAO = new MembreDAO(connect);
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
 			while(result.next()){
-				tres.add(new Voiture(result.getString("numImmat"), mbrDAO.find(result.getInt("idPers")), result.getInt("nbPlaces")));
+				tres.add(new Voiture(result.getInt("idPers"), result.getString("nom"), result.getString("prenom"), result.getDate("dateNaiss"), adrDAO.find(result.getInt("idAdr")), result.getFloat("cotisation"), result.getString("motDePasse")));
 			}
 			super.close(result);
 		}

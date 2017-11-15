@@ -67,6 +67,7 @@ private long generatedId;
 
 	@Override
 	public List<Categorie> findAll() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

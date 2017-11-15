@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-import be.wilson.ClubVeloPOJO.Membre;
 import be.wilson.ClubVeloPOJO.Voiture;
 
 public class VoitureDAO extends DAO<Voiture> {
@@ -109,20 +107,6 @@ public class VoitureDAO extends DAO<Voiture> {
 
 	@Override
 	public List<Voiture> findAll() {
-		List<Voiture> tres = new ArrayList<Voiture>();
-		MembreDAO mbrDAO = new MembreDAO(connect);
-		try{
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
-			while(result.next()){
-				tres.add(new Voiture(result.getString("numImmat"), mbrDAO.find(result.getInt("idPers")), result.getInt("nbPlaces")));
-			}
-			super.close(result);
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		return tres;
+		return null;
 	}
 }

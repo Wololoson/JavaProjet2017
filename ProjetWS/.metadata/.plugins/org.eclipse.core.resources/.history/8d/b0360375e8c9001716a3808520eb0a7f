@@ -109,21 +109,20 @@ public class BaladeDAO extends DAO<Balade> {
 
 	@Override
 	public List<Balade> findAll() {
-		List<Balade> tres = new ArrayList<Balade>();
-		AdresseDAO adrDAO = new AdresseDAO(connect);
-		CategorieDAO catDAO = new CategorieDAO(connect);
-		try{
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
-			while(result.next()){
-				tres.add(new Balade(result.getInt("idBal"), result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
-			}
-			super.close(result);
+		List<Voiture> tres = new ArrayList<Voiture>();
+	MembreDAO mbrDAO = new MembreDAO(connect);
+	try{
+		ResultSet result = this.connect.createStatement(
+				ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
+		while(result.next()){
+			tres.add(new Voiture(result.getString("numImmat"), mbrDAO.find(result.getInt("idPers")), result.getInt("nbPlaces")));
 		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		return tres;
+		super.close(result);
+	}
+	catch(SQLException e){
+		e.printStackTrace();
+	}
+	return tres;
 	}
 }

@@ -4,11 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import be.wilson.ClubVeloPOJO.Adresse;
-import be.wilson.ClubVeloPOJO.Voiture;
 
 public class AdresseDAO extends DAO<Adresse> {
 	private long generatedId;
@@ -104,23 +101,5 @@ public class AdresseDAO extends DAO<Adresse> {
 	
 	public long getGeneratedId(){
 		return generatedId;
-	}
-
-	@Override
-	public List<Adresse> findAll() {
-		List<Adresse> tres = new ArrayList<Adresse>();
-		try{
-			ResultSet result = this.connect.createStatement(
-					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
-			while(result.next()){
-				tres.add( new Adresse(result.getInt("idAdr"), result.getString("rue"), result.getInt("numero"), result.getString("codePost"), result.getString("ville"), result.getString("pays")));
-			}
-			super.close(result);
-		}
-		catch(SQLException e){
-			e.printStackTrace();
-		}
-		return tres;
 	}
 }

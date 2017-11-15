@@ -109,6 +109,7 @@ public class AdresseDAO extends DAO<Adresse> {
 	@Override
 	public List<Adresse> findAll() {
 		List<Adresse> tres = new ArrayList<Adresse>();
+		MembreDAO mbrDAO = new MembreDAO(connect);
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,

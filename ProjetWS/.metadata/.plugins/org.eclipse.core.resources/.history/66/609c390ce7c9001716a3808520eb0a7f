@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import be.wilson.ClubVeloPOJO.Balade;
 import be.wilson.ClubVeloPOJO.Categorie;
@@ -63,10 +62,5 @@ private long generatedId;
 	@Override
 	public boolean update(Categorie obj) {
 		return false;
-	}
-
-	@Override
-	public List<Categorie> findAll() {
-		return null;
 	}
 }
