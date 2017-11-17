@@ -89,7 +89,7 @@ private long generatedId;
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie "
-														   + "WHERE idAdr = " + id);
+														   + "WHERE idCat = " + id);
 			if(result.first()){
 				cyc = new Cyclo(id, result.getInt("nbMembres"), respDAO.find(result.getInt("idPers")));
 			}

@@ -57,4 +57,6 @@ public abstract class Categorie implements Serializable{
 	public abstract void SupprimerMembre(Membre m);
 	
 	public abstract boolean equals(Membre m);
+	
+	public abstract String getSimpleName();
 }

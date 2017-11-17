@@ -218,7 +218,7 @@ public class ConnexionWindow{
 		
 		//Création du Bouton de connexion
 		JButton connBut = new JButton("Se connecter");
-		connBut.setBorder(new LineBorder(new Color(0, 0, 0)));
+		connBut.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		connBut.setForeground(Color.WHITE);
 		
 		connBut.addActionListener(new ActionListener() {

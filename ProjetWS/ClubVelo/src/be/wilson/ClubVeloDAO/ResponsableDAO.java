@@ -110,8 +110,8 @@ public class ResponsableDAO extends DAO<Responsable> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
-														   + "INNER JOIN Responsable WHERE ipPers = " + id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Responsable R ON P.idPers = R.idPers WHERE idPers = " + id);
 			if(resultPers.first()){
 				resp = new Responsable(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getDate("dateExp"), resultPers.getString("motDePasse"));
 			}

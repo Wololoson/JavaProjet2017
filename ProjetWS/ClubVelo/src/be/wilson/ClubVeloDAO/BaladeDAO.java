@@ -115,9 +115,9 @@ public class BaladeDAO extends DAO<Balade> {
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade");
 			while(result.next()){
-				tres.add(new Balade(result.getInt("idBal"), result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
+				tres.add(new Balade(result.getInt("idBal"), result.getString("libelleBal"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
 			}
 			super.close(result);
 		}

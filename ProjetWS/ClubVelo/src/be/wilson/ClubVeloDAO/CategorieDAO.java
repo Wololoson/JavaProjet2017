@@ -28,14 +28,16 @@ private long generatedId;
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT type FROM Categorie "
-														   + "WHERE idAdr = " + id);
-			switch(result.getString("type")){
-			case "VTT":
-				cat = vttDAO.find(id);
-				break;
-			case "Cyclo":
-				cat = cycloDAO.find(id);
-				break;
+														   + "WHERE idCat = " + id);
+			if(result.first()) {
+				switch(result.getString("type")){
+				case "VTT":
+					cat = vttDAO.find(id);
+					break;
+				case "Cyclo":
+					cat = cycloDAO.find(id);
+					break;
+				}
 			}
 			
 			super.close(result);

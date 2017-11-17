@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
 <fullyQualifiedTypeName name="java.sql.Date"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Responsable"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Tresorier"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Categorie"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.VTT"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.TypeVTT"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Cyclo"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Balade"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Membre"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.DAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.MembreDAO"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="java.awt.Graphics"/>
@@ -31,9 +24,21 @@
 <fullyQualifiedTypeName name="javax.swing.JComboBox"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloConnection.DBConnection"/>
 <fullyQualifiedTypeName name="java.sql.Connection"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Personne"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="javax.swing.DefaultComboBoxModel"/>
 <fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Personne"/>
+<fullyQualifiedTypeName name="javax.swing.ComboBoxModel"/>
+<fullyQualifiedTypeName name="javax.swing.DefaultComboBoxModel"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Balade"/>
+<fullyQualifiedTypeName name="javax.swing.JList"/>
+<fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.DAO"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.BaladeDAO"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.AdresseDAO"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.VTT"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Categorie"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Cyclo"/>
 </qualifiedTypeNameHistroy>

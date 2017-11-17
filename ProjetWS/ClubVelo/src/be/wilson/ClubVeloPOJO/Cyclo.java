@@ -24,4 +24,8 @@ public class Cyclo extends Categorie {
 		else
 			return false;
 	}
+	
+	public String getSimpleName() {
+		return String.format("Cyclo");
+	}
 }

@@ -88,13 +88,13 @@ private long generatedId;
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie"
-														   + "WHERE idAdr = " + id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie "
+														   + "WHERE idCat = " + id);
 			if(result.first()){
 				for(TypeVTT t : TypeVTT.values()){
-					if(TypeVTT.Descendeur.equals(result.getString("sousType")))
+					if(TypeVTT.Descendeur.toString().equals(result.getString("sousType")))
 						typeVTT = TypeVTT.Descendeur;
-					else if (TypeVTT.Randonneur.equals(result.getString("sousType")))
+					else if (TypeVTT.Randonneur.toString().equals(result.getString("sousType")))
 						typeVTT = TypeVTT.Randonneur;
 					else
 						typeVTT = TypeVTT.Trialiste;

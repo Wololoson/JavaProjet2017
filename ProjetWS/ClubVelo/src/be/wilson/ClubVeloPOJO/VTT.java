@@ -34,4 +34,8 @@ public class VTT extends Categorie{
 		else
 			return false;
 	}
+	
+	public String getSimpleName() {
+		return String.format("VTT");
+	}
 }
