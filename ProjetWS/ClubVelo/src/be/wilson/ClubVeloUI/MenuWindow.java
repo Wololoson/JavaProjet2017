@@ -12,13 +12,17 @@ import be.wilson.ClubVeloPOJO.Adresse;
 import be.wilson.ClubVeloPOJO.Balade;
 import be.wilson.ClubVeloPOJO.Categorie;
 import be.wilson.ClubVeloPOJO.Cyclo;
+import be.wilson.ClubVeloPOJO.Membre;
 import be.wilson.ClubVeloPOJO.Personne;
+import be.wilson.ClubVeloPOJO.Responsable;
+import be.wilson.ClubVeloPOJO.Tresorier;
 import be.wilson.ClubVeloPOJO.VTT;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -147,6 +151,7 @@ public class MenuWindow {
 		titlePanel.add(lblQueCoulezvouFaire);
 		
 		JButton btnQuitter = new JButton("Quitter");
+		btnQuitter.setFocusable(false);
 		btnQuitter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(1);
@@ -160,6 +165,7 @@ public class MenuWindow {
 		quitBtnPan.add(btnQuitter);
 		
 		JButton btnCatgories = new JButton("Cat\u00E9gories");
+		btnCatgories.setFocusable(false);
 		btnCatgories.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -172,8 +178,11 @@ public class MenuWindow {
 		catBtnPan.add(btnCatgories);
 		
 		JButton btnVosInformations = new JButton("Vos informations");
+		btnVosInformations.setFocusable(false);
 		btnVosInformations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
+				cl.show(frmMenu.getContentPane(), "name_61436559030751");
 			}
 		});
 		btnVosInformations.setPreferredSize(new Dimension(400, 50));
@@ -184,6 +193,7 @@ public class MenuWindow {
 		infosBtnPan.add(btnVosInformations);
 		
 		JButton btnNewButton = new JButton("Covoiturage");
+		btnNewButton.setFocusable(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
@@ -200,49 +210,60 @@ public class MenuWindow {
 		frmMenu.getContentPane().setLayout(new CardLayout(0, 0));
 		frmMenu.getContentPane().add(menuPan, "name_1028370164432");
 		
-		JPanel codrivingPan = new JPanel();
-		codrivingPan.setVisible(false);
-		codrivingPan.setBackground(Color.DARK_GRAY);
-		frmMenu.getContentPane().add(codrivingPan, "name_1879696200068");
+		JPanel codrivingBalPan = new JPanel();
+		codrivingBalPan.setVisible(false);
+		codrivingBalPan.setBackground(Color.DARK_GRAY);
+		frmMenu.getContentPane().add(codrivingBalPan, "name_1879696200068");
 		
-		JPanel titlePan = new JPanel();
-		titlePan.setBackground(Color.DARK_GRAY);
+		JPanel titleBalPan = new JPanel();
+		titleBalPan.setBackground(Color.DARK_GRAY);
 		
 		JPanel balPan = new JPanel();
 		balPan.setBackground(Color.DARK_GRAY);
-		GroupLayout gl_codrivingPan = new GroupLayout(codrivingPan);
-		gl_codrivingPan.setHorizontalGroup(
-			gl_codrivingPan.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_codrivingPan.createSequentialGroup()
+		GroupLayout gl_codrivingBalPan = new GroupLayout(codrivingBalPan);
+		gl_codrivingBalPan.setHorizontalGroup(
+			gl_codrivingBalPan.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_codrivingBalPan.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_codrivingPan.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_codrivingBalPan.createParallelGroup(Alignment.TRAILING)
 						.addComponent(balPan, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
-						.addComponent(titlePan, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
+						.addComponent(titleBalPan, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
 					.addContainerGap())
 		);
-		gl_codrivingPan.setVerticalGroup(
-			gl_codrivingPan.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_codrivingPan.createSequentialGroup()
+		gl_codrivingBalPan.setVerticalGroup(
+			gl_codrivingBalPan.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_codrivingBalPan.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(titlePan, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addComponent(titleBalPan, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(balPan, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
 		balTable = new JTable();
+		balTable.setFocusable(false);
+		balTable.setGridColor(new Color(0, 0, 0));
+		balTable.setShowVerticalLines(false);
+		balTable.setPreferredScrollableViewportSize(new Dimension(740, 320));
+		balTable.setRowHeight(60);
+		balTable.setFont(new Font("Arial Black", Font.PLAIN, 25));
 		balTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		balTable.setShowGrid(false);
 		balTable.setBorder(new LineBorder(new Color(0, 0, 0)));
-		balTable.setPreferredSize(new Dimension(740, 350));
+		balTable.setPreferredSize(new Dimension(740, 315));
 		balTable.setSelectionBackground(new Color(128, 128, 128));
 		balTable.setForeground(Color.WHITE);
 		balTable.setBackground(Color.DARK_GRAY);
-		populate(new BaladeTableModel());
-		
-		balPan.add(balTable);
+		balTable.getTableHeader().setFont(new Font("Arial Black", Font.PLAIN, 20));
+		populateBal(new BaladeTableModel());
+		JScrollPane balSP = new JScrollPane(balTable);
+		balSP.setBorder(new LineBorder(new Color(0, 0, 0)));
+		balSP.setForeground(new Color(0, 0, 0));
+		balSP.setPreferredSize(new Dimension(740, 350));
+		balSP.setBackground(Color.DARK_GRAY);
+		balPan.add(balSP);
 		
 		JButton selectBalBtn = new JButton("Choisir");
+		selectBalBtn.setFocusable(false);
 		selectBalBtn.setForeground(Color.WHITE);
 		selectBalBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
 		selectBalBtn.setPreferredSize(new Dimension(300, 50));
@@ -251,6 +272,7 @@ public class MenuWindow {
 		balPan.add(selectBalBtn);
 		
 		JButton balBackBtn = new JButton("Retour");
+		balBackBtn.setFocusable(false);
 		balBackBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
@@ -269,11 +291,168 @@ public class MenuWindow {
 		lblBalades.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBalades.setPreferredSize(new Dimension(750, 75));
 		lblBalades.setForeground(Color.WHITE);
-		titlePan.add(lblBalades);
-		codrivingPan.setLayout(gl_codrivingPan);
+		titleBalPan.add(lblBalades);
+		codrivingBalPan.setLayout(gl_codrivingBalPan);
+		
+		JPanel infosPan = new JPanel();
+		infosPan.setBackground(Color.DARK_GRAY);
+		frmMenu.getContentPane().add(infosPan, "name_61436559030751");
+		
+		JPanel infoTitlePan = new JPanel();
+		infoTitlePan.setBackground(Color.DARK_GRAY);
+		
+		JLabel infoTitle = new JLabel("Vos informations");
+		infoTitle.setPreferredSize(new Dimension(750, 75));
+		infoTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		infoTitle.setForeground(Color.WHITE);
+		infoTitle.setFont(new Font("Century Gothic", Font.BOLD, 65));
+		infoTitlePan.add(infoTitle);
+		
+		JPanel infosPanIn = new JPanel();
+		infosPanIn.setBackground(Color.DARK_GRAY);
+		
+		JPanel infos = new JPanel();
+		infos.setBackground(Color.DARK_GRAY);
+		infos.setPreferredSize(new Dimension(740, 350));
+		infosPanIn.add(infos);
+		infos.setLayout(new GridLayout(8, 2, 0, 0));
+		
+		JLabel nomLbl = new JLabel("Nom :");
+		nomLbl.setForeground(Color.WHITE);
+		nomLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(nomLbl);
+		
+		JLabel nomTxt = new JLabel(connected.getNom());
+		nomTxt.setForeground(Color.WHITE);
+		nomTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(nomTxt);
+		
+		JLabel prenomLbl = new JLabel("Pr\u00E9nom :");
+		prenomLbl.setForeground(Color.WHITE);
+		prenomLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(prenomLbl);
+		
+		JLabel prenomTxt = new JLabel(connected.getPrenom());
+		prenomTxt.setForeground(Color.WHITE);
+		prenomTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(prenomTxt);
+		
+		JLabel dateNaissLbl = new JLabel("Date de naissance :");
+		dateNaissLbl.setForeground(Color.WHITE);
+		dateNaissLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(dateNaissLbl);
+		
+		JLabel dateNaissTxt = new JLabel(connected.getDateNaiss().toString());
+		dateNaissTxt.setForeground(Color.WHITE);
+		dateNaissTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(dateNaissTxt);
+		
+		JLabel rueLbl = new JLabel("Rue :");
+		rueLbl.setForeground(Color.WHITE);
+		rueLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(rueLbl);
+		
+		JLabel rueTxt = new JLabel(connected.getAdr().getRue() + " " + connected.getAdr().getNum());
+		rueTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		rueTxt.setForeground(Color.WHITE);
+		infos.add(rueTxt);
+		
+		JLabel codePostLbl = new JLabel("Code postal :");
+		codePostLbl.setForeground(Color.WHITE);
+		codePostLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(codePostLbl);
+		
+		JLabel codePostTxt = new JLabel(connected.getAdr().getCodePost());
+		codePostTxt.setForeground(Color.WHITE);
+		codePostTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(codePostTxt);
+		
+		JLabel villeLbl = new JLabel("Ville :");
+		villeLbl.setForeground(Color.WHITE);
+		villeLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(villeLbl);
+		
+		JLabel villeTxt = new JLabel(connected.getAdr().getVille());
+		villeTxt.setForeground(Color.WHITE);
+		villeTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(villeTxt);
+		
+		JLabel paysLbl = new JLabel("Pays :");
+		paysLbl.setForeground(Color.WHITE);
+		paysLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(paysLbl);
+		
+		JLabel paysTxt = new JLabel(connected.getAdr().getPays());
+		paysTxt.setForeground(Color.WHITE);
+		paysTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(paysTxt);
+		
+		JLabel otherLbl;
+		JLabel otherTxt;
+		if(connected instanceof Membre) {
+			otherLbl = new JLabel("Cotisation :");
+			otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + " €");
+		}
+		else if(connected instanceof Responsable) {
+			otherLbl = new JLabel("Date de fin :");
+			otherTxt = new JLabel(((Responsable)connected).getDateExp().toString());
+		}
+		else if(connected instanceof Tresorier) {
+			otherLbl = new JLabel("");
+			otherTxt = new JLabel("");
+		}
+		else {
+			otherLbl = new JLabel("Error");
+			otherTxt = new JLabel("Error");
+		}
+		
+		
+		otherLbl.setForeground(Color.WHITE);
+		otherLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
+		infos.add(otherLbl);
+		
+		
+		otherTxt.setForeground(Color.WHITE);
+		otherTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
+		infos.add(otherTxt);
+		
+		JButton infosBackBtn = new JButton("Retour");
+		infosBackBtn.setFocusable(false);
+		infosBackBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
+				cl.show(frmMenu.getContentPane(), "name_1028370164432");
+			}
+		});
+		infosBackBtn.setPreferredSize(new Dimension(300, 50));
+		infosBackBtn.setForeground(Color.WHITE);
+		infosBackBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
+		infosBackBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		infosBackBtn.setBackground(Color.DARK_GRAY);
+		infosPanIn.add(infosBackBtn);
+		GroupLayout gl_infosPan = new GroupLayout(infosPan);
+		gl_infosPan.setHorizontalGroup(
+			gl_infosPan.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_infosPan.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_infosPan.createParallelGroup(Alignment.LEADING)
+						.addComponent(infoTitlePan, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+						.addComponent(infosPanIn, GroupLayout.PREFERRED_SIZE, 748, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_infosPan.setVerticalGroup(
+			gl_infosPan.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_infosPan.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(infoTitlePan, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(infosPanIn, GroupLayout.PREFERRED_SIZE, 419, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		infosPan.setLayout(gl_infosPan);
 	}
 	
-	public void populate(DefaultTableModel model) {
+	public void populateBal(DefaultTableModel model) {
 		String catName;
 		DAO<Balade> balDAO = new BaladeDAO(conn);
 		for(Balade b : balDAO.findAll()) {
