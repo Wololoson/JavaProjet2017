@@ -1,14 +1,33 @@
 package be.wilson.ClubVeloUI;
 
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
-import be.wilson.ClubVeloConnection.DBConnection;
-import be.wilson.ClubVeloDAO.AdresseDAO;
-import be.wilson.ClubVeloDAO.BaladeDAO;
 import be.wilson.ClubVeloDAO.DAO;
-import be.wilson.ClubVeloPOJO.Adresse;
+import be.wilson.ClubVeloDAO.MembreDAO;
+import be.wilson.ClubVeloFactory.AbstractDAOFactory;
 import be.wilson.ClubVeloPOJO.Balade;
 import be.wilson.ClubVeloPOJO.Categorie;
 import be.wilson.ClubVeloPOJO.Cyclo;
@@ -18,42 +37,13 @@ import be.wilson.ClubVeloPOJO.Responsable;
 import be.wilson.ClubVeloPOJO.Tresorier;
 import be.wilson.ClubVeloPOJO.VTT;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.JButton;
-import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.awt.event.ActionEvent;
-import java.awt.CardLayout;
-import java.awt.Component;
-import javax.swing.SwingConstants;
-import javax.swing.JSpinner;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-
 public class MenuWindow {
 
 	private JFrame frmMenu;
 	private Personne connected;
 	private JTable balTable;
-	Connection conn;
+	JLabel lblStatusRand;
+	AbstractDAOFactory adf;
 
 	public void menuDisplay() {
 		EventQueue.invokeLater(new Runnable() {
@@ -70,9 +60,20 @@ public class MenuWindow {
 	/**
 	 * Création
 	 */
-	public MenuWindow(Personne p) {
-		connected = p;
-		conn = DBConnection.getInstance();
+	public MenuWindow(long id, String type) {
+		adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+		if(type == "Membre") {
+			DAO<Membre> mbreDAO = adf.getMembreDAO();
+			connected = mbreDAO.find((int)id);
+		}
+		else if(type == "Responsable") {
+			DAO<Responsable> respDAO = adf.getResponsableDAO();
+			connected = respDAO.find((int)id);
+		}
+		else {
+			DAO<Tresorier> tresDAO = adf.getTresorierDAO();
+			connected = tresDAO.find((int)id);
+		}
 		initialize();
 	}
 
@@ -168,6 +169,8 @@ public class MenuWindow {
 		btnCatgories.setFocusable(false);
 		btnCatgories.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
+				cl.show(frmMenu.getContentPane(), "name_66898688181732");
 			}
 		});
 		btnCatgories.setPreferredSize(new Dimension(400, 50));
@@ -390,8 +393,10 @@ public class MenuWindow {
 		JLabel otherLbl;
 		JLabel otherTxt;
 		if(connected instanceof Membre) {
+			MembreDAO membreDAO = (MembreDAO) adf.getMembreDAO();
+			float suppl = membreDAO.getSuppl(connected.getId());
 			otherLbl = new JLabel("Cotisation :");
-			otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + " €");
+			otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + Float.toString(suppl) + " €");
 		}
 		else if(connected instanceof Responsable) {
 			otherLbl = new JLabel("Date de fin :");
@@ -450,11 +455,218 @@ public class MenuWindow {
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		infosPan.setLayout(gl_infosPan);
+		
+		JPanel catPan = new JPanel();
+		catPan.setBackground(Color.DARK_GRAY);
+		frmMenu.getContentPane().add(catPan, "name_66898688181732");
+		
+		JPanel titleCatPan = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) titleCatPan.getLayout();
+		flowLayout.setVgap(1);
+		flowLayout.setHgap(1);
+		titleCatPan.setBackground(Color.DARK_GRAY);
+		
+		JLabel titleCat = new JLabel("Cat\u00E9gories");
+		titleCat.setVerticalAlignment(SwingConstants.TOP);
+		titleCat.setPreferredSize(new Dimension(750, 82));
+		titleCat.setHorizontalAlignment(SwingConstants.CENTER);
+		titleCat.setForeground(Color.WHITE);
+		titleCat.setFont(new Font("Century Gothic", Font.BOLD, 65));
+		titleCatPan.add(titleCat);
+		
+		JPanel catPanIn = new JPanel();
+		catPanIn.setBackground(Color.DARK_GRAY);
+		catPanIn.setPreferredSize(new Dimension(740, 350));
+		
+		JButton backCatBtn = new JButton("Retour");
+		backCatBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
+				cl.show(frmMenu.getContentPane(), "name_1028370164432");
+			}
+		});
+		backCatBtn.setPreferredSize(new Dimension(300, 50));
+		backCatBtn.setForeground(Color.WHITE);
+		backCatBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
+		backCatBtn.setFocusable(false);
+		backCatBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		backCatBtn.setBackground(Color.DARK_GRAY);
+		GroupLayout gl_catPan = new GroupLayout(catPan);
+		gl_catPan.setHorizontalGroup(
+			gl_catPan.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_catPan.createSequentialGroup()
+					.addGroup(gl_catPan.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_catPan.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_catPan.createParallelGroup(Alignment.TRAILING)
+								.addComponent(catPanIn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+								.addComponent(titleCatPan, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)))
+						.addGroup(gl_catPan.createSequentialGroup()
+							.addGap(234)
+							.addComponent(backCatBtn, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+							.addGap(229)))
+					.addContainerGap())
+		);
+		gl_catPan.setVerticalGroup(
+			gl_catPan.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_catPan.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(titleCatPan, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(catPanIn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(backCatBtn, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(26, Short.MAX_VALUE))
+		);
+		catPanIn.setLayout(new GridLayout(5, 3, 0, 0));
+		
+		JLabel lblLibell = new JLabel("Libell\u00E9");
+		lblLibell.setOpaque(true);
+		lblLibell.setBackground(Color.GRAY);
+		lblLibell.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblLibell.setForeground(Color.WHITE);
+		catPanIn.add(lblLibell);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setOpaque(true);
+		lblStatus.setBackground(Color.GRAY);
+		lblStatus.setForeground(Color.WHITE);
+		lblStatus.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblStatus);
+		
+		JLabel lblInscription = new JLabel("Inscription (5\u20AC)");
+		lblInscription.setOpaque(true);
+		lblInscription.setBackground(Color.GRAY);
+		lblInscription.setForeground(Color.WHITE);
+		lblInscription.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblInscription);
+		
+		JLabel lblRandonneur = new JLabel("Randonneur");
+		lblRandonneur.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblRandonneur.setForeground(Color.WHITE);
+		catPanIn.add(lblRandonneur);
+		
+		lblStatusRand = new JLabel("Non inscrit");
+		JButton btnInscRand = new JButton("S'inscrire");
+		btnInscRand.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblStatusRand.setText("Inscrit");
+				btnInscRand.setEnabled(false);
+				((Membre)connected).ajouterCat(1);
+			}
+		});
+		for(Categorie c : ((Membre)connected).getListeCat()) {
+			if(c instanceof VTT && ((VTT) c).getType().toString() == "Randonneur") {
+				lblStatusRand.setText("Inscrit");
+				btnInscRand.setEnabled(false);
+			}	
+		}
+		lblStatusRand.setForeground(Color.WHITE);
+		lblStatusRand.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblStatusRand);
+		
+		btnInscRand.setBorder(new LineBorder(new Color(0, 0, 0)));
+		btnInscRand.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		btnInscRand.setBackground(Color.DARK_GRAY);
+		btnInscRand.setForeground(Color.WHITE);
+		catPanIn.add(btnInscRand);
+		
+		JLabel lblDescendeur = new JLabel("Descendeur");
+		lblDescendeur.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblDescendeur.setForeground(Color.WHITE);
+		catPanIn.add(lblDescendeur);
+		
+		JLabel lblStatusDesc = new JLabel("Non inscrit");
+		JButton btnInscDesc = new JButton("S'inscrire");
+		btnInscDesc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblStatusDesc.setText("Inscrit");
+				btnInscDesc.setEnabled(false);
+				((Membre)connected).ajouterCat(2);
+			}
+		});
+		for(Categorie c : ((Membre)connected).getListeCat()) {
+			if(c instanceof VTT && ((VTT) c).getType().toString() == "Descendeur") {
+				lblStatusDesc.setText("Inscrit");
+				btnInscDesc.setEnabled(false);
+			}	
+		}
+		lblStatusDesc.setForeground(Color.WHITE);
+		lblStatusDesc.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblStatusDesc);
+		
+		btnInscDesc.setForeground(Color.WHITE);
+		btnInscDesc.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		btnInscDesc.setBorder(new LineBorder(new Color(0, 0, 0)));
+		btnInscDesc.setBackground(Color.DARK_GRAY);
+		catPanIn.add(btnInscDesc);
+		
+		JLabel lblTrialiste = new JLabel("Trialiste");
+		lblTrialiste.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblTrialiste.setForeground(Color.WHITE);
+		catPanIn.add(lblTrialiste);
+		
+		JLabel lblStatusTri = new JLabel("Non inscrit");
+		JButton btnInscTri = new JButton("S'inscrire");
+		btnInscTri.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblStatusTri.setText("Inscrit");
+				btnInscTri.setEnabled(false);
+				((Membre)connected).ajouterCat(3);
+			}
+		});
+		for(Categorie c : ((Membre)connected).getListeCat()) {
+			if(c instanceof VTT && ((VTT) c).getType().toString() == "Trialiste") {
+				lblStatusTri.setText("Inscrit");
+				btnInscTri.setEnabled(false);
+			}	
+		}
+		lblStatusTri.setForeground(Color.WHITE);
+		lblStatusTri.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblStatusTri);
+		
+		btnInscTri.setForeground(Color.WHITE);
+		btnInscTri.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		btnInscTri.setBorder(new LineBorder(new Color(0, 0, 0)));
+		btnInscTri.setBackground(Color.DARK_GRAY);
+		catPanIn.add(btnInscTri);
+		
+		JLabel lblCyclo = new JLabel("Cyclo");
+		lblCyclo.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		lblCyclo.setForeground(Color.WHITE);
+		catPanIn.add(lblCyclo);
+		
+		JLabel lblStatusCyc = new JLabel("Non inscrit");
+		JButton btnInscCyc = new JButton("S'inscrire");
+		btnInscCyc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblStatusCyc.setText("Inscrit");
+				btnInscCyc.setEnabled(false);
+				((Membre)connected).ajouterCat(4);
+			}
+		});
+		
+		for(Categorie c : ((Membre)connected).getListeCat()) {
+			if(c instanceof Cyclo) {
+				lblStatusCyc.setText("Inscrit");
+				btnInscCyc.setEnabled(false);
+			}
+		}
+		lblStatusCyc.setForeground(Color.WHITE);
+		lblStatusCyc.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		catPanIn.add(lblStatusCyc);
+		
+		btnInscCyc.setForeground(Color.WHITE);
+		btnInscCyc.setFont(new Font("Century Gothic", Font.BOLD, 25));
+		btnInscCyc.setBorder(new LineBorder(new Color(0, 0, 0)));
+		btnInscCyc.setBackground(Color.DARK_GRAY);
+		catPanIn.add(btnInscCyc);
+		catPan.setLayout(gl_catPan);
 	}
 	
 	public void populateBal(DefaultTableModel model) {
 		String catName;
-		DAO<Balade> balDAO = new BaladeDAO(conn);
+		DAO<Balade> balDAO = adf.getBaladeDAO();
 		for(Balade b : balDAO.findAll()) {
 			if(b.getCat() instanceof VTT) {
 				VTT v = (VTT)b.getCat();

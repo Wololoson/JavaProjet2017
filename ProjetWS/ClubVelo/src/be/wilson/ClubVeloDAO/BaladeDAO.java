@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.wilson.ClubVeloPOJO.Adresse;
 import be.wilson.ClubVeloPOJO.Balade;
-import be.wilson.ClubVeloPOJO.Voiture;
+import be.wilson.ClubVeloPOJO.Categorie;
 
 public class BaladeDAO extends DAO<Balade> {
 	private long generatedId;
@@ -85,8 +86,8 @@ public class BaladeDAO extends DAO<Balade> {
 	
 	public Balade find(int id){
 		Balade bal = new Balade();
-		AdresseDAO adrDAO = new AdresseDAO(connect);
-		CategorieDAO catDAO = new CategorieDAO(connect);
+		DAO<Adresse> adrDAO = adf.getAdresseDAO();
+		DAO<Categorie> catDAO = adf.getCatDAO();
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -110,14 +111,25 @@ public class BaladeDAO extends DAO<Balade> {
 	@Override
 	public List<Balade> findAll() {
 		List<Balade> tres = new ArrayList<Balade>();
-		AdresseDAO adrDAO = new AdresseDAO(connect);
-		CategorieDAO catDAO = new CategorieDAO(connect);
+		DAO<Categorie> catDAO = adf.getCatDAO();
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade");
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade B "
+														   + "INNER JOIN Adresse A ON B.idAdr = A.idAdr "
+														   + "INNER JOIN Categorie C ON B.idCat = C.idCat");
 			while(result.next()){
-				tres.add(new Balade(result.getInt("idBal"), result.getString("libelleBal"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat"))));
+				tres.add(new Balade(result.getInt("idBal"), 
+									result.getString("libelleBal"), 
+									new Adresse(result.getInt("idAdr"), 
+												result.getString("rue"),
+												result.getInt("numero"), 
+												result.getString("codePost"),
+												result.getString("ville"),
+												result.getString("pays")), 
+									result.getDate("dateBal"), 
+									result.getFloat("fraisDepla"), 
+									catDAO.find(result.getInt("idCat"))));
 			}
 			super.close(result);
 		}
@@ -125,5 +137,23 @@ public class BaladeDAO extends DAO<Balade> {
 			e.printStackTrace();
 		}
 		return tres;
+	}
+	
+	public List<Balade> getBalList(String numImmat){
+		List<Balade> balList = new ArrayList<>();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Eclat_Bal_Disp "
+														   + "WHERE numImmat = " + numImmat);
+			while(result.next()){
+				balList.add(find(result.getInt("idBal")));
+			}
+			super.close(result);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return balList;
 	}
 }

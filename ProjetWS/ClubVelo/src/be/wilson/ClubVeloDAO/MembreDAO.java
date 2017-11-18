@@ -1,14 +1,17 @@
 package be.wilson.ClubVeloDAO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.wilson.ClubVeloPOJO.Adresse;
 import be.wilson.ClubVeloPOJO.Membre;
-import be.wilson.ClubVeloPOJO.Responsable;
 
 public class MembreDAO extends DAO<Membre>{
-	AdresseDAO adrDAO = new AdresseDAO(connect);
+	AdresseDAO adrDAO = (AdresseDAO) adf.getAdresseDAO();
 	private long generatedId;
 	
 	public MembreDAO(Connection conn){
@@ -107,10 +110,16 @@ public class MembreDAO extends DAO<Membre>{
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
-														   + "INNER JOIN Membre WHERE ipPers = " + id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Membre M ON P.idPers = M.idPers WHERE idPers = " + id);
 			if(resultPers.first()){
-				membre = new Membre(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse"));
+				membre = new Membre(id, 
+									resultPers.getString("nom"), 
+									resultPers.getString("prenom"), 
+									resultPers.getDate("dateNaiss"), 
+									adrDAO.find(resultPers.getInt("idAdr")), 
+									resultPers.getFloat("cotisation"), 
+									resultPers.getString("motDePasse"));
 			}
 			super.close(resultPers);
 		}
@@ -126,9 +135,22 @@ public class MembreDAO extends DAO<Membre>{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
-														   + "INNER JOIN Membre M ON P.idPers = M.idPers ORDER BY nom ASC");
+														   + "INNER JOIN Membre M ON P.idPers = M.idPers "
+														   + "INNER JOIN Adresse A ON P.idAdr = A.idAdr "
+														   + "ORDER BY nom ASC");
 			while(resultPers.next()){
-				tres.add(new Membre(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getFloat("cotisation"), resultPers.getString("motDePasse")));
+				tres.add(new Membre(resultPers.getInt("idPers"), 
+									resultPers.getString("nom"), 
+									resultPers.getString("prenom"), 
+									resultPers.getDate("dateNaiss"), 
+									new Adresse(resultPers.getInt("idAdr"), 
+												resultPers.getString("rue"),
+												resultPers.getInt("numero"), 
+												resultPers.getString("codePost"),
+												resultPers.getString("ville"),
+												resultPers.getString("pays")), 
+									resultPers.getFloat("cotisation"), 
+									resultPers.getString("motDePasse")));
 			}
 			super.close(resultPers);
 		}
@@ -138,6 +160,81 @@ public class MembreDAO extends DAO<Membre>{
 		return tres;
 	}
 	
+	public float getSuppl(long id) {
+		float suppl = 0;
+		try{
+			ResultSet resultPers = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Ligne_Membre_Cat "
+														   + "WHERE idPers = " + id);
+			while(resultPers.next()){
+				suppl += resultPers.getFloat("supplement");
+			}
+			super.close(resultPers);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return suppl;
+	}
+	
+	public List<Membre> getMembreList(int id){
+		List<Membre> mbreList = new ArrayList<>();
+		List<Membre> all = findAll();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Ligne_Membre_Cat L "
+														   + "WHERE idCat = " + id);
+			while(result.next()){
+				for(Membre m : all)
+					if(m.getId() == result.getInt("idPers"))
+						mbreList.add(m);
+			}
+			super.close(result);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return mbreList;
+	}
+	
+	public List<Membre> getPassagers(String numImmat, int idBal){
+		List<Membre> mbreList = new ArrayList<>();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Ecalt_bal_Disp "
+														   + "WHERE idBal = " + idBal + " AND numImmat = " + numImmat);
+			while(result.next()){
+				mbreList.add(find(result.getInt("idPers")));
+			}
+			super.close(result);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return mbreList;
+	}
+	
+	public boolean addCat(int idCat, int idPers) {
+		PreparedStatement stmt = null;
+		try{
+			stmt = connect.prepareStatement("INSERT INTO Ligne_Membre_Cat(idPers, idCat, supplement) "
+										  + "VALUES(?, ?, ?)");
+			stmt.setInt(1, idPers);
+			stmt.setInt(2, idCat);
+			stmt.setFloat(3, 5f);
+			stmt.executeUpdate();
+			
+			super.close(stmt);
+			return true;
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
 	
 	public long getGeneratedId(){
 		return generatedId;

@@ -20,9 +20,4 @@ public class Tresorier extends Personne {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
-	public void modifierInfosPerso(Tresorier t) {
-		super.modifierInfosPerso(t);
-		this.code = t.code;
-	}
 }

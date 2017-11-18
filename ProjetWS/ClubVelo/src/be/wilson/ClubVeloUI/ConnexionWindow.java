@@ -1,50 +1,41 @@
 package be.wilson.ClubVeloUI;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import java.awt.FlowLayout;
 import javax.swing.JComboBox;
-import java.awt.Dimension;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import java.awt.Component;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
-import be.wilson.ClubVeloConnection.DBConnection;
 import be.wilson.ClubVeloDAO.DAO;
-import be.wilson.ClubVeloDAO.MembreDAO;
-import be.wilson.ClubVeloDAO.ResponsableDAO;
-import be.wilson.ClubVeloDAO.TresorierDAO;
+import be.wilson.ClubVeloFactory.AbstractDAOFactory;
 import be.wilson.ClubVeloPOJO.Membre;
 import be.wilson.ClubVeloPOJO.Personne;
 import be.wilson.ClubVeloPOJO.Responsable;
 import be.wilson.ClubVeloPOJO.Tresorier;
 
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.border.LineBorder;
-import javax.swing.JInternalFrame;
-
 public class ConnexionWindow{
 
 	private JFrame frmConnexion;
 	private JPasswordField pwdFld;
+	private AbstractDAOFactory adf;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -63,6 +54,8 @@ public class ConnexionWindow{
 	 * Création
 	 */
 	public ConnexionWindow() {
+		//Appel de la factory
+		adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		initialize();
 	}
 
@@ -70,14 +63,11 @@ public class ConnexionWindow{
 	 * Initialisation
 	 */
 	private void initialize() {
-		//Connexion à la DB
-		Connection conn = DBConnection.getInstance();
-		
 		//Chargement de la liste des membres/responsables/trésorier
 		List<Personne> membres = new ArrayList<Personne>();
-		DAO<Membre> membreDAO = new MembreDAO(conn);
-		DAO<Responsable> responsableDAO = new ResponsableDAO(conn);
-		DAO<Tresorier> tresorierDAO = new TresorierDAO(conn);
+		DAO<Membre> membreDAO = adf.getMembreDAO();
+		DAO<Responsable> responsableDAO = adf.getResponsableDAO();
+		DAO<Tresorier> tresorierDAO = adf.getTresorierDAO();
 		
 		for(Membre m : membreDAO.findAll())
 			membres.add(m);
@@ -224,9 +214,17 @@ public class ConnexionWindow{
 		connBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Personne selected = (Personne)nameCB.getSelectedItem();
+				String type = null;
+				if(nameCB.getSelectedItem() instanceof Membre)
+					type = "Membre";
+				else if(nameCB.getSelectedItem() instanceof Responsable)
+					type = "Responsable";
+				else
+					type = "Tresorier";
+				
 				if(selected.getMotDePasse().equals(String.valueOf(pwdFld.getPassword()))) {
 					errorMessage.setVisible(false);
-					MenuWindow menu = new MenuWindow(selected);
+					MenuWindow menu = new MenuWindow(selected.getId(), type);
 					frmConnexion.setVisible(false); 
 					frmConnexion.dispose();
 					menu.menuDisplay();

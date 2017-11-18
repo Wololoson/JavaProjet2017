@@ -4,6 +4,9 @@ import java.io.*;
 import java.sql.Date;
 import java.util.*;
 
+import be.wilson.ClubVeloDAO.VoitureDAO;
+import be.wilson.ClubVeloFactory.AbstractDAOFactory;
+
 public class Balade implements Serializable {
 	private static final long serialVersionUID = 2249723182500190742L;
 	private int id;
@@ -13,6 +16,8 @@ public class Balade implements Serializable {
 	private float fraisDepla;
 	private List<Voiture> listVoit;
 	private Categorie cat;
+	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	VoitureDAO voitDAO = (VoitureDAO) adf.getVoitureDAO();
 	
 	public Balade() { }
 	public Balade(int id, String libelle, Adresse adr, Date date, float fraisDepla, Categorie cat) {
@@ -21,7 +26,7 @@ public class Balade implements Serializable {
 		this.adr = adr;
 		this.date = date;
 		this.fraisDepla = fraisDepla;
-		listVoit = new ArrayList<>();
+		listVoit = voitDAO.getVoitList(id);
 		this.cat = cat;
 	}
 	public Categorie getCat() {

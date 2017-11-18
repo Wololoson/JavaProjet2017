@@ -1,0 +1,2 @@
+- Terminer la page des catégories
+- Faire la page des disponibiltés (bouton choisir dans la page des balades)

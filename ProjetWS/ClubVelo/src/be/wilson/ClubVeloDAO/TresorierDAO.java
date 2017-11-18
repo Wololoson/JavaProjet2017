@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.wilson.ClubVeloPOJO.Membre;
+import be.wilson.ClubVeloPOJO.Adresse;
 import be.wilson.ClubVeloPOJO.Tresorier;
 
 public class TresorierDAO extends DAO<Tresorier> {
-	AdresseDAO adrDAO = new AdresseDAO(connect);
+	AdresseDAO adrDAO = (AdresseDAO) adf.getAdresseDAO();
 	private long generatedId;
 	
 	public TresorierDAO(Connection conn){
@@ -113,7 +113,13 @@ public class TresorierDAO extends DAO<Tresorier> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
 														   + "INNER JOIN Tresorier WHERE ipPers = " + id);
 			if(resultPers.first()){
-				tres = new Tresorier(id, resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getString("code"), resultPers.getString("motDePasse"));
+				tres = new Tresorier(id, 
+									 resultPers.getString("nom"), 
+									 resultPers.getString("prenom"), 
+									 resultPers.getDate("dateNaiss"), 
+									 adrDAO.find(resultPers.getInt("idAdr")), 
+									 resultPers.getString("code"), 
+									 resultPers.getString("motDePasse"));
 			}
 			super.close(resultPers);
 		}
@@ -129,9 +135,22 @@ public class TresorierDAO extends DAO<Tresorier> {
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
-														   + "INNER JOIN Tresorier T ON P.idPers = T.idPers ORDER BY nom ASC");
+														   + "INNER JOIN Tresorier T ON P.idPers = T.idPers "
+														   + "INNER JOIN Adresse A ON P.idAdr = A.idAdr "
+														   + "ORDER BY nom ASC");
 			while(resultPers.next()){
-				tres.add(new Tresorier(resultPers.getInt("idPers"), resultPers.getString("nom"), resultPers.getString("prenom"), resultPers.getDate("dateNaiss"), adrDAO.find(resultPers.getInt("idAdr")), resultPers.getString("code"), resultPers.getString("motDePasse")));
+				tres.add(new Tresorier(resultPers.getInt("idPers"), 
+									   resultPers.getString("nom"), 
+									   resultPers.getString("prenom"),
+									   resultPers.getDate("dateNaiss"), 
+									   new Adresse(resultPers.getInt("idAdr"), 
+												resultPers.getString("rue"),
+												resultPers.getInt("numero"), 
+												resultPers.getString("codePost"),
+												resultPers.getString("ville"),
+												resultPers.getString("pays")), 
+									   resultPers.getString("code"), 
+									   resultPers.getString("motDePasse")));
 			}
 			super.close(resultPers);
 		}

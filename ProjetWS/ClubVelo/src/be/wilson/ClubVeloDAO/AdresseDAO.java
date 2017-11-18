@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.wilson.ClubVeloPOJO.Adresse;
-import be.wilson.ClubVeloPOJO.Voiture;
 
 public class AdresseDAO extends DAO<Adresse> {
 	private long generatedId;
@@ -91,7 +90,12 @@ public class AdresseDAO extends DAO<Adresse> {
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Adresse "
 														   + "WHERE idAdr = " + id);
 			if(result.first()){
-				adr = new Adresse(id, result.getString("rue"), result.getInt("numero"), result.getString("codePost"), result.getString("ville"), result.getString("pays"));
+				adr = new Adresse(id, 
+								  result.getString("rue"), 
+								  result.getInt("numero"), 
+								  result.getString("codePost"), 
+								  result.getString("ville"), 
+								  result.getString("pays"));
 			}
 			
 			super.close(result);
@@ -114,7 +118,12 @@ public class AdresseDAO extends DAO<Adresse> {
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Voiture");
 			while(result.next()){
-				tres.add( new Adresse(result.getInt("idAdr"), result.getString("rue"), result.getInt("numero"), result.getString("codePost"), result.getString("ville"), result.getString("pays")));
+				tres.add( new Adresse(result.getInt("idAdr"), 
+									  result.getString("rue"), 
+									  result.getInt("numero"), 
+									  result.getString("codePost"), 
+									  result.getString("ville"), 
+									  result.getString("pays")));
 			}
 			super.close(result);
 		}

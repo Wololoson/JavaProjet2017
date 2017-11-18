@@ -3,11 +3,15 @@ package be.wilson.ClubVeloDAO;
 import java.sql.*;
 import java.util.List;
 
+import be.wilson.ClubVeloFactory.AbstractDAOFactory;
+
 public abstract class DAO<T> {
 	protected Connection connect = null;
+	protected AbstractDAOFactory adf;
 	
 	public DAO(Connection conn){
 		this.connect = conn;
+		adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 	}
 	
 	public abstract boolean create(T obj);

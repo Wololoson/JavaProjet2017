@@ -71,13 +71,6 @@ public abstract class Personne  implements Serializable {
 		this.motDePasse = motDePasse;
 	}
 	
-	public void modifierInfosPerso(Personne p) {
-		this.id = p.id;
-		this.nom = p.nom;
-		this.prenom = p.prenom;
-		this.dateNaiss = p.dateNaiss;
-		this.adr = p.adr;
-	}
 	
 	public String toString() {
 		return String.format(nom.toUpperCase() + " " + prenom);

@@ -20,9 +20,4 @@ public class Responsable extends Personne {
 	public void setDateExp(Date dateExp) {
 		this.dateExp = dateExp;
 	}
-	
-	public void modifierInfosPerso(Responsable r) {
-		super.modifierInfosPerso(r);
-		this.dateExp = r.dateExp;
-	}
 }

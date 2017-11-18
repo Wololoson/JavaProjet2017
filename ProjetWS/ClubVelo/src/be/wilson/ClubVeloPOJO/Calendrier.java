@@ -2,11 +2,16 @@ package be.wilson.ClubVeloPOJO;
 
 import java.util.*;
 
+import be.wilson.ClubVeloDAO.DAO;
+import be.wilson.ClubVeloFactory.AbstractDAOFactory;
+
 public class Calendrier {
 	private List<Balade> cal;
+	private AbstractDAOFactory adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
+	DAO<Balade> balDAO = adf.getBaladeDAO();
 
 	public Calendrier() {
-		this.cal = new ArrayList<>();
+		this.cal = balDAO.findAll();
 	}
 
 	public List<Balade> getCal() {
