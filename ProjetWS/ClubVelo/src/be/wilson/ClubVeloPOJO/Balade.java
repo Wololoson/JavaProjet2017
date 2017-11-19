@@ -26,7 +26,7 @@ public class Balade implements Serializable {
 		this.adr = adr;
 		this.date = date;
 		this.fraisDepla = fraisDepla;
-		listVoit = voitDAO.getVoitList(id);
+		listVoit = new ArrayList<>();
 		this.cat = cat;
 	}
 	public Categorie getCat() {

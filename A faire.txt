@@ -1,2 +1,8 @@
-- Terminer la page des catégories
-- Faire la page des disponibiltés (bouton choisir dans la page des balades)
+- Factory : tout mettre en global
+- Faire le menu pour le responsable
+- Page d'info pour le resp
+- Pages de calendrier pour le resp
+ =>CalMain (Sélection d'une balade dans le calendrier, peut etre tri par date), CalGestion(Affichage de la balade, calcul du forfait)
+- Page de menu pour le tresorier
+- Page d'infos pour le tres
+- Page de vérification des cotisations pour le tres

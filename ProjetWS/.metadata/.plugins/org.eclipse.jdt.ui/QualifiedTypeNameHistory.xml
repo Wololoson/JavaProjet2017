@@ -22,22 +22,17 @@
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Personne"/>
 <fullyQualifiedTypeName name="javax.swing.ComboBoxModel"/>
 <fullyQualifiedTypeName name="javax.swing.DefaultComboBoxModel"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="javax.swing.JList"/>
 <fullyQualifiedTypeName name="javax.swing.table.DefaultTableModel"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.BaladeDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.AdresseDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.VTT"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Cyclo"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Membre"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Tresorier"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.CategorieDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloConnection.DBConnection"/>
 <fullyQualifiedTypeName name="java.sql.Connection"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.VoitureDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Balade"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Responsable"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloFactory.DAOFactory"/>
@@ -45,5 +40,11 @@
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.DAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Categorie"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Voiture"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.BaladeDAO"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.VoitureDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.MembreDAO"/>
 </qualifiedTypeNameHistroy>

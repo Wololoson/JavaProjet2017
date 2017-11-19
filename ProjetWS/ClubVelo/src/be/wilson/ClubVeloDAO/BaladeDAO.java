@@ -93,8 +93,8 @@ public class BaladeDAO extends DAO<Balade> {
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Balade "
 														   + "WHERE idBal = " + id);
-			
-			bal = new Balade(id, result.getString("libelleCat"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat")));
+			if(result.first())
+				bal = new Balade(id, result.getString("libelleBal"), adrDAO.find(result.getInt("idAdr")), result.getDate("dateBal"), result.getFloat("fraisDepla"), catDAO.find(result.getInt("idCat")));
 			
 			super.close(result);
 		}
@@ -108,8 +108,7 @@ public class BaladeDAO extends DAO<Balade> {
 		return generatedId;
 	}
 
-	@Override
-	public List<Balade> findAll() {
+	public List<Balade> findAll(List<Integer> idCat) {
 		List<Balade> tres = new ArrayList<Balade>();
 		DAO<Categorie> catDAO = adf.getCatDAO();
 		try{
@@ -119,17 +118,21 @@ public class BaladeDAO extends DAO<Balade> {
 														   + "INNER JOIN Adresse A ON B.idAdr = A.idAdr "
 														   + "INNER JOIN Categorie C ON B.idCat = C.idCat");
 			while(result.next()){
-				tres.add(new Balade(result.getInt("idBal"), 
-									result.getString("libelleBal"), 
-									new Adresse(result.getInt("idAdr"), 
-												result.getString("rue"),
-												result.getInt("numero"), 
-												result.getString("codePost"),
-												result.getString("ville"),
-												result.getString("pays")), 
-									result.getDate("dateBal"), 
-									result.getFloat("fraisDepla"), 
-									catDAO.find(result.getInt("idCat"))));
+				for(int i : idCat) {
+					if(result.getInt("idCat") == i) {
+						tres.add(new Balade(result.getInt("idBal"), 
+											result.getString("libelleBal"), 
+											new Adresse(result.getInt("idAdr"), 
+														result.getString("rue"),
+														result.getInt("numero"), 
+														result.getString("codePost"),
+														result.getString("ville"),
+														result.getString("pays")), 
+											result.getDate("dateBal"), 
+											result.getFloat("fraisDepla"), 
+											catDAO.find(result.getInt("idCat"))));
+					}
+				}
 			}
 			super.close(result);
 		}
@@ -155,5 +158,11 @@ public class BaladeDAO extends DAO<Balade> {
 			e.printStackTrace();
 		}
 		return balList;
+	}
+
+	@Override
+	public List<Balade> findAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

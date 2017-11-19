@@ -1,6 +1,7 @@
 package be.wilson.ClubVeloPOJO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import be.wilson.ClubVeloDAO.MembreDAO;
@@ -8,6 +9,7 @@ import be.wilson.ClubVeloFactory.AbstractDAOFactory;
 
 public class Voiture implements Serializable {
 	private static final long serialVersionUID = 8173001894596959567L;
+	private int id;
 	private Membre chauffeur;
 	private List<Membre> passagers;
 	private String numImmat;
@@ -18,13 +20,22 @@ public class Voiture implements Serializable {
 	
 	public Voiture(){}
 	
-	public Voiture(String numImmat, Membre chauffeur,  int nbPlaces, Balade bal) {
+	public Voiture(int id, String numImmat, Membre chauffeur,  int nbPlaces, Balade bal) {
+		this.id = id;
 		this.chauffeur = chauffeur;
 		this.numImmat = numImmat;
 		this.nbPlaces = nbPlaces;
 		this.bal = bal;
-		passagers = mbreDAO.getPassagers(numImmat, bal.getId());
+		passagers = new ArrayList<>();
 	}
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Balade getBal() {
 		return bal;
 	}

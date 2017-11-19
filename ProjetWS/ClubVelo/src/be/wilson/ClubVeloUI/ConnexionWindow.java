@@ -32,11 +32,17 @@ import be.wilson.ClubVeloPOJO.Responsable;
 import be.wilson.ClubVeloPOJO.Tresorier;
 
 public class ConnexionWindow{
-
+	//SECTION : Création des variables globales
+	
 	private JFrame frmConnexion;
 	private JPasswordField pwdFld;
 	private AbstractDAOFactory adf;
+	
+	//FIN DE SECTION : Création des variables globales
 
+	//SECTION : Méthodes préalables
+	
+	//Main appelé au lancement du programme
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -58,6 +64,10 @@ public class ConnexionWindow{
 		adf = AbstractDAOFactory.getFactory(AbstractDAOFactory.DAO_FACTORY);
 		initialize();
 	}
+	
+	//FIN DE SECTION : Méthodes préalables
+	
+	//SECTION : Corps
 
 	/**
 	 * Initialisation
@@ -78,51 +88,56 @@ public class ConnexionWindow{
 		for(Tresorier t : tresorierDAO.findAll())
 			membres.add(t);
 		
-		//Création de la Frame principal
+		//SECTION : Création des Panel (Swing)
+		
+		//Frame principal
 		frmConnexion = new JFrame();
 		frmConnexion.getContentPane().setForeground(Color.WHITE);
 		frmConnexion.setTitle("Connexion");
 		frmConnexion.getContentPane().setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel de titre
+		//Panel de titre
 		JPanel titlePan = new JPanel();
 		titlePan.setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel des Nom
+		//Panel des Nom
 		JPanel namePan = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) namePan.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		flowLayout.setVgap(15);
 		namePan.setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel de la ComboBox des noms
+		//Panel de la ComboBox des noms
 		JPanel nameCBPan = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) nameCBPan.getLayout();
 		flowLayout_3.setVgap(15);
 		nameCBPan.setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel de l'input du mot de passe
+		//Panel de l'input du mot de passe
 		JPanel pwdFldPan = new JPanel();
 		FlowLayout flowLayout_4 = (FlowLayout) pwdFldPan.getLayout();
 		flowLayout_4.setVgap(15);
 		pwdFldPan.setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel du mot de passe
+		//Panel du mot de passe
 		JPanel pwdPan = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) pwdPan.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		flowLayout_1.setVgap(15);
 		pwdPan.setBackground(Color.DARK_GRAY);
 		
-		//Création du Panel du bouton de connexion
+		//Panel du bouton de connexion
 		JPanel connButPan = new JPanel();
 		FlowLayout flowLayout_2 = (FlowLayout) connButPan.getLayout();
 		flowLayout_2.setVgap(15);
 		connButPan.setBackground(Color.DARK_GRAY);
 		
+		//Panel pour le message d'erreur
 		JPanel errorMessagePan = new JPanel();
 		errorMessagePan.setBackground(Color.DARK_GRAY);
 		errorMessagePan.setForeground(Color.WHITE);
+		
+		//Grouplayout principal + ajout des éléments à celui-ci (Swing uniquement)
 		GroupLayout groupLayout = new GroupLayout(frmConnexion.getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -169,13 +184,18 @@ public class ConnexionWindow{
 					.addGap(8))
 		);
 		
+		//FIN DE SECTION : Création des Panels
+		
+		//SECTION : Création des éléments de la fenêtre
+		
+		//Message d'erreur
 		JLabel errorMessage = new JLabel("Mot de passe incorrect");
 		errorMessage.setVisible(false);
 		errorMessage.setFont(new Font("Arial Black", Font.BOLD, 16));
 		errorMessage.setForeground(Color.RED);
 		errorMessagePan.add(errorMessage);
 		
-		//Création de l'input pour le mot de passe
+		//Input pour le mot de passe
 		pwdFld = new JPasswordField();
 		pwdFld.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pwdFld.setBackground(Color.GRAY);
@@ -184,7 +204,7 @@ public class ConnexionWindow{
 		pwdFld.setSize(new Dimension(170, 20));
 		pwdFldPan.add(pwdFld);
 		
-		//Création de la ComboBox des nom
+		//ComboBox des nom
 		JComboBox<Personne> nameCB = new JComboBox<>(new DefaultComboBoxModel<Personne>(membres.toArray(new Personne[0])));
 		nameCB.setBorder(new LineBorder(Color.BLACK));
 		nameCB.setSelectedIndex(-1);
@@ -194,37 +214,45 @@ public class ConnexionWindow{
 		nameCB.setBackground(Color.GRAY);
 		nameCBPan.add(nameCB);
 		
-		//Création du Label du Password
+		//Label du mot de passe
 		JLabel pwd = new JLabel("Mot de passe :");
 		pwd.setHorizontalAlignment(SwingConstants.LEFT);
 		pwd.setForeground(Color.WHITE);
 		pwdPan.add(pwd);
 		
-		//Création du Label du Nom
+		//Label du Nom
 		JLabel name = new JLabel("Nom :");
 		name.setHorizontalAlignment(SwingConstants.LEFT);
 		name.setForeground(Color.WHITE);
 		namePan.add(name);
 		
-		//Création du Bouton de connexion
+		//Bouton de connexion
 		JButton connBut = new JButton("Se connecter");
 		connBut.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		connBut.setForeground(Color.WHITE);
 		
 		connBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//Sauvegarde de la personne connectée
 				Personne selected = (Personne)nameCB.getSelectedItem();
-				String type = null;
-				if(nameCB.getSelectedItem() instanceof Membre)
-					type = "Membre";
-				else if(nameCB.getSelectedItem() instanceof Responsable)
-					type = "Responsable";
-				else
-					type = "Tresorier";
+				Personne connected = null;
+				if(selected instanceof Membre) {
+					DAO<Membre> mbreDAO = adf.getMembreDAO();
+					connected = mbreDAO.find((int)selected.getId());
+				}
+				else if(selected instanceof Responsable) {
+					DAO<Responsable> respDAO = adf.getResponsableDAO();
+					connected = respDAO.find((int)selected.getId());
+				}
+				else {
+					DAO<Tresorier> tresDAO = adf.getTresorierDAO();
+					connected = tresDAO.find((int)selected.getId());
+				}
 				
+				//Si le mot de passe est correct, on connecte, sinon on affiche l'erreur
 				if(selected.getMotDePasse().equals(String.valueOf(pwdFld.getPassword()))) {
 					errorMessage.setVisible(false);
-					MenuWindow menu = new MenuWindow(selected.getId(), type);
+					MenuWindow menu = new MenuWindow((Membre)connected);
 					frmConnexion.setVisible(false); 
 					frmConnexion.dispose();
 					menu.menuDisplay();
@@ -240,15 +268,19 @@ public class ConnexionWindow{
 		connBut.setBackground(Color.DARK_GRAY);
 		connButPan.add(connBut);
 		
-		//Création du Label du titre
+		//Label du titre
 		JLabel title = new JLabel("Bienvenue");
 		title.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		title.setForeground(Color.WHITE);
 		title.setBackground(Color.DARK_GRAY);
 		titlePan.add(title);
 		
+		// FIN DE SECTION : Création des éléments de la fenêtre
+		
 		frmConnexion.getContentPane().setLayout(groupLayout);
 		frmConnexion.setBounds(100, 100, 450, 340);
 		frmConnexion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	//FIN DE SECTION : Corps
 }

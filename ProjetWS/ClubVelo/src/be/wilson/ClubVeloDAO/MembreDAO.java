@@ -199,13 +199,13 @@ public class MembreDAO extends DAO<Membre>{
 		return mbreList;
 	}
 	
-	public List<Membre> getPassagers(String numImmat, int idBal){
+	public List<Membre> getPassagers(int idVoit, int idBal){
 		List<Membre> mbreList = new ArrayList<>();
 		try{
 			ResultSet result = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Ecalt_bal_Disp "
-														   + "WHERE idBal = " + idBal + " AND numImmat = " + numImmat);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Eclat_Bal_Disp "
+														   + "WHERE idBal = " + idBal + " AND idVoit = " + idVoit);
 			while(result.next()){
 				mbreList.add(find(result.getInt("idPers")));
 			}
