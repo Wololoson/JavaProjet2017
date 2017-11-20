@@ -2,12 +2,19 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="BaladeTableModel" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="BaladeTableModel"/>
+			<item value="name_catResp"/>
+			<item value="name_catPan"/>
+			<item value="name_cal"/>
+			<item value="name_"/>
+			<item value="frame"/>
+			<item value="frmMenu"/>
 			<item value="balDAO"/>
 			<item value="voitDAO"/>
 			<item value="mbreDAO"/>
@@ -16,15 +23,9 @@
 			<item value="MembreDAO"/>
 			<item value="adf"/>
 			<item value="JOptionPane"/>
-			<item value="setPassagers"/>
-			<item value="populateBal"/>
-			<item value="selectedV"/>
-			<item value="selected"/>
-			<item value="System.out"/>
-			<item value="coSp"/>
-			<item value="selectedBal"/>
 		</list>
 		<list key="replacehistory">
+			<item value="frmResp"/>
 			<item value="nameCBPan"/>
 		</list>
 	</section>

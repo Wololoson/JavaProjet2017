@@ -29,7 +29,11 @@ public class AdresseDAO extends DAO<Adresse> {
 			stmt.setString(5, obj.getPays());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
+			
+			obj.setId((int)generatedId);
 
 			super.close(stmt);
 			return true;
@@ -47,8 +51,6 @@ public class AdresseDAO extends DAO<Adresse> {
 					  					  + "WHERE idAdr = ?");
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
-			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
 
 			super.close(stmt);
 			return true;

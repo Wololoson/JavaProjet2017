@@ -252,10 +252,25 @@ public class ConnexionWindow{
 				//Si le mot de passe est correct, on connecte, sinon on affiche l'erreur
 				if(selected.getMotDePasse().equals(String.valueOf(pwdFld.getPassword()))) {
 					errorMessage.setVisible(false);
-					MenuWindow menu = new MenuWindow((Membre)connected);
 					frmConnexion.setVisible(false); 
 					frmConnexion.dispose();
-					menu.menuDisplay();
+					MenuWindow menu;
+					RespWindow resp;
+					//TresWindow tres;
+					if(connected instanceof Membre) {
+						menu = new MenuWindow((Membre)connected);
+						menu.menuDisplay();
+					}
+					else if(connected instanceof Responsable) {
+						resp = new RespWindow((Responsable)connected);
+						resp.respDisplay();
+					}
+					//else {
+						//tres = new TresWindow((Tresorier)connected);
+						//tres.tresDisplay();
+					//}
+					
+					
 				}
 				else {
 					errorMessage.setVisible(true);

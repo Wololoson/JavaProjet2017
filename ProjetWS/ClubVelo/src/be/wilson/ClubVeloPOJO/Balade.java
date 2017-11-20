@@ -20,6 +20,7 @@ public class Balade implements Serializable {
 	VoitureDAO voitDAO = (VoitureDAO) adf.getVoitureDAO();
 	
 	public Balade() { }
+	
 	public Balade(int id, String libelle, Adresse adr, Date date, float fraisDepla, Categorie cat) {
 		this.id = id;
 		this.libelle = libelle;
@@ -68,6 +69,7 @@ public class Balade implements Serializable {
 	public Date getDate() {
 		return date;
 	}
+	
 	public void setDate(Date date) {
 		this.date = date;
 	}

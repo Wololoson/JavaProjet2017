@@ -246,19 +246,19 @@ public class CategorieDAO extends DAO<Categorie> {
 						break;
 					case "Cyclo":
 						catList.add(new Cyclo(result.getInt("idCat"), 
-											  result.getInt("nbMembre"), 
+											  result.getInt("nbMembres"), 
 											  new Responsable(result.getInt("idPers"),
-														result.getString("idPers"),
-														result.getString("idPers"),
-														result.getDate("idPers"),
+														result.getString("nom"),
+														result.getString("prenom"),
+														result.getDate("dateNaiss"),
 														new Adresse(result.getInt("idAdr"), 
 																	result.getString("rue"),
 																	result.getInt("numero"), 
 																	result.getString("codePost"),
 																	result.getString("ville"),
 																	result.getString("pays")),
-														result.getDate("idPers"),
-														result.getString("idPers"))));
+														result.getDate("dateExp"),
+														result.getString("motDePasse"))));
 						break;
 				}
 			}
@@ -268,5 +268,44 @@ public class CategorieDAO extends DAO<Categorie> {
 			e.printStackTrace();
 		}
 		return catList;
+	}
+	
+	public Categorie findForResp(int idPers) {
+		Categorie cat = null;
+		TypeVTT typeVTT = null;
+		DAO<Responsable> respDAO = adf.getResponsableDAO();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Categorie "
+														   + "WHERE idPers = " + idPers);
+			if(result.first()) {
+				switch(result.getString("type")){
+				case "VTT":
+					if(TypeVTT.Descendeur.toString().equals(result.getString("sousType")))
+						typeVTT = TypeVTT.Descendeur;
+					else if (TypeVTT.Randonneur.toString().equals(result.getString("sousType")))
+						typeVTT = TypeVTT.Randonneur;
+					else
+						typeVTT = TypeVTT.Trialiste;
+					cat = new VTT(result.getInt("idCat"), 
+								  result.getInt("nbMembres"), 
+								  respDAO.find(result.getInt("idPers")), 
+								  typeVTT);
+					break;
+				case "Cyclo":
+					cat = new Cyclo(result.getInt("idCat"), 
+									result.getInt("nbMembres"), 
+									respDAO.find(result.getInt("idPers")));
+					break;
+				}
+			}
+			
+			super.close(result);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+		}
+		return cat;
 	}
 }

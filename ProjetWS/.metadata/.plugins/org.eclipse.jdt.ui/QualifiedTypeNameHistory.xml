@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="java.util.GregorianCalendar"/>
-<fullyQualifiedTypeName name="java.sql.Date"/>
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.TypeVTT"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
@@ -28,23 +26,27 @@
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.VTT"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Cyclo"/>
 <fullyQualifiedTypeName name="javax.swing.JScrollPane"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Membre"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Tresorier"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.CategorieDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloConnection.DBConnection"/>
 <fullyQualifiedTypeName name="java.sql.Connection"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Balade"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Responsable"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloFactory.DAOFactory"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloFactory.AbstractDAOFactory"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.DAO"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Categorie"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Voiture"/>
-<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.BaladeDAO"/>
-<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.VoitureDAO"/>
 <fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.MembreDAO"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Responsable"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Membre"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Categorie"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.CategorieDAO"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloPOJO.Adresse"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="java.sql.Date"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.time.LocalDate"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloFactory.AbstractDAOFactory"/>
+<fullyQualifiedTypeName name="be.wilson.ClubVeloDAO.BaladeDAO"/>
 </qualifiedTypeNameHistroy>

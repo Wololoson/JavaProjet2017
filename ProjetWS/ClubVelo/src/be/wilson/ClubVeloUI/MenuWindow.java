@@ -477,11 +477,7 @@ public class MenuWindow {
 		float suppl = membreDAO.getSuppl(connected.getId());
 		JLabel otherLbl = new JLabel("Cotisation :");
 		JLabel otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + Float.toString(suppl) + " €");
-		/*JLabel otherLbl = new JLabel("Date de fin :");
-		JLabel otherTxt = new JLabel(((Responsable)connected).getDateExp().toString());
 		
-		JLabel otherLbl = new JLabel("");
-		JLabel otherTxt = new JLabel("");*/
 		otherLbl.setForeground(Color.WHITE);
 		otherLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		infos.add(otherLbl);
@@ -972,9 +968,9 @@ public class MenuWindow {
 		numImmatFldPan.setBackground(Color.DARK_GRAY);
 		addCarPan.add(numImmatFldPan);
 		
-		//FIN DE SECTION : Création des Panels de la fenêtre de covoiturage
+		//FIN DE SECTION : Création des Panels de la fenêtre d'ajout de voiture
 		
-		//SECTION : Création des éléments de la fenêtre de covoiturage
+		//SECTION : Création des éléments de la fenêtre d'ajout de voiture
 		
 		JLabel numImmatStart = new JLabel("1-");
 		numImmatStart.setFont(new Font("Arial Black", Font.PLAIN, 17));
@@ -1177,7 +1173,7 @@ public class MenuWindow {
 		acBackBtnPan.setLayout(gl_acBackBtnPan);
 		addCodrivingPan.setLayout(gl_addCodrivingPan);
 		
-		//FIN DE SECTION : Création des éléments de la fenêtre de covoiturage
+		//FIN DE SECTION : Création des éléments de la fenêtre d'ajout de voiture
 	}
 	
 	//FIN DE SECTION : Corps
