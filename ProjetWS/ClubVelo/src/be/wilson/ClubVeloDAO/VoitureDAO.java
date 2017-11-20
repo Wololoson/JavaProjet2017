@@ -91,7 +91,9 @@ public class VoitureDAO extends DAO<Voiture> {
 			stmt.setString(1, obj.getNumImmat());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 
 			super.close(stmt);
 			return true;
@@ -113,7 +115,9 @@ public class VoitureDAO extends DAO<Voiture> {
 			stmt.setLong(3, obj.getChauffeur().getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 			super.close(stmt);
 			
 			return true;

@@ -61,6 +61,7 @@ public class MenuWindow {
 	private MembreDAO membreDAO;
 	private VoitureDAO voitureDAO;
 	private BaladeDAO baladeDAO;
+	List<Balade> listBal = new ArrayList<>();
 	
 	//FIN DE SECTION : Création des variables globales
 	
@@ -239,6 +240,7 @@ public class MenuWindow {
 		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				listBal = populateBal(new BaladeTableModel());
 				CardLayout cl = (CardLayout)frmMenu.getContentPane().getLayout() ;
 				cl.show(frmMenu.getContentPane(), "name_1879696200068");
 			}
@@ -311,7 +313,7 @@ public class MenuWindow {
 		balTable.getTableHeader().setFont(new Font("Arial Black", Font.PLAIN, 20));
 		
 		//Appel de la fonction de remplissage de la table et d'une liste contenant ces mêmes balades
-		List<Balade> listBal = populateBal(new BaladeTableModel());
+		listBal = populateBal(new BaladeTableModel());
 		
 		JScrollPane balSP = new JScrollPane(balTable);
 		balSP.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -476,15 +478,45 @@ public class MenuWindow {
 		
 		float suppl = membreDAO.getSuppl(connected.getId());
 		JLabel otherLbl = new JLabel("Cotisation :");
-		JLabel otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + Float.toString(suppl) + " €");
+		
 		
 		otherLbl.setForeground(Color.WHITE);
 		otherLbl.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		infos.add(otherLbl);
 		
+		JPanel otherPan = new JPanel();
+		otherPan.setBackground(Color.DARK_GRAY);
+		infos.add(otherPan);
+		otherPan.setLayout(new GridLayout(1, 2, 0, 0));
+		
+		JLabel otherTxt = new JLabel(Float.toString(((Membre) connected).getCotisation()) + Float.toString(suppl) + " €");
+		otherPan.add(otherTxt);
 		otherTxt.setForeground(Color.WHITE);
 		otherTxt.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		infos.add(otherTxt);
+		
+		//Bouton permettant de mettre à jour la cotisation
+		JButton otherBtn = new JButton("J'ai pay\u00E9");
+		otherBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				((Membre) connected).setCotisation(((Membre) connected).getCotisation() - 20);
+				membreDAO.update(connected);
+				otherTxt.setText(Float.toString(((Membre) connected).getCotisation()) + Float.toString(suppl) + " €");
+				otherBtn.setEnabled(false);
+			}
+		});
+		
+		if(((Membre) connected).getCotisation() == 0f)
+			otherBtn.setEnabled(false);
+		else
+			otherBtn.setEnabled(true);
+			
+		otherBtn.setPreferredSize(new Dimension(300, 50));
+		otherBtn.setForeground(Color.WHITE);
+		otherBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
+		otherBtn.setFocusable(false);
+		otherBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		otherBtn.setBackground(Color.DARK_GRAY);
+		otherPan.add(otherBtn);
 		
 		//Bouton de retour en arrière
 		JButton infosBackBtn = new JButton("Retour");

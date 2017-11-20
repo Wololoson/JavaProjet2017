@@ -61,7 +61,9 @@ public class TresorierDAO extends DAO<Tresorier> {
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 			super.close(stmt);
 
 			return true;
@@ -110,8 +112,9 @@ public class TresorierDAO extends DAO<Tresorier> {
 		try{
 			ResultSet resultPers = this.connect.createStatement(
 					ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne "
-														   + "INNER JOIN Tresorier WHERE ipPers = " + id);
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT * FROM Personne P "
+														   + "INNER JOIN Tresorier T ON P.idPers = T.idPers "
+														   + "WHERE idPers = " + id);
 			if(resultPers.first()){
 				tres = new Tresorier(id, 
 									 resultPers.getString("nom"), 

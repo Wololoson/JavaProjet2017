@@ -10,4 +10,8 @@ public class CalendrierTableModel extends DefaultTableModel {
 		addColumn("Date");
 		addColumn("Forfait");
 	}
+	
+	public boolean isCellEditable(int row, int column){  
+        return false;  
+    }
 }

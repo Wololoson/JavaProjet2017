@@ -43,7 +43,7 @@ public class Membre extends Personne{
 		Categorie c = catDAO.find((int)idCat);
 		if(!listeCat.contains(c)) {
 			listeCat.add(c);
-			mbreDAO.addCat((int)this.id, idCat);
+			mbreDAO.addCat((int)this.id, idCat, 5f);
 		}	
 	}
 }

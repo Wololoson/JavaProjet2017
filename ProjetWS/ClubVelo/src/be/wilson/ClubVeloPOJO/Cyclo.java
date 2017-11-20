@@ -19,4 +19,9 @@ public class Cyclo extends Categorie {
 	public String getSimpleName() {
 		return String.format("Cyclo");
 	}
+	
+	@Override
+	public String toString() {
+		return getSimpleName();
+	}
 }

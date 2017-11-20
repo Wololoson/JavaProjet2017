@@ -40,6 +40,8 @@ public abstract class Categorie implements Serializable{
 		this.nbMembres = nbMembres;
 	}
 	
+	public abstract String toString();
+	
 	public abstract boolean equals(Membre m);
 	
 	public abstract String getSimpleName();

@@ -21,29 +21,30 @@ public class MembreDAO extends DAO<Membre>{
 	
 	public boolean create(Membre obj){
 		PreparedStatement stmt = null;
-		long idPers = 0;
-		long idAdr = 0;
 		try{
 			adrDAO.create(obj.getAdr());
-			idAdr = adrDAO.getGeneratedId();
 			
 			stmt = connect.prepareStatement("INSERT INTO Personne(nom, prenom, dateNaiss, idAdr, motDePasse) "
 										  + "VALUES(?, ?, ?, ?, ?)");
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
 			stmt.setDate(3, obj.getDateNaiss());
-			stmt.setLong(4, idAdr);
+			stmt.setLong(4, obj.getAdr().getId());
 			stmt.setString(5, obj.getMotDePasse());
 			stmt.executeUpdate();
 			
-			idPers = stmt.getGeneratedKeys().getLong(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next()) {
+				obj.setId(rs.getInt(1));
+				generatedId = rs.getInt(1);
+			}
+			
 			stmt = connect.prepareStatement("INSERT INTO Membre(idPers, cotisation) "
 					  					  + "VALUES(?, ?)");
-			stmt.setLong(1, idPers);
+			stmt.setLong(1, obj.getId());
 			stmt.setFloat(2, obj.getCotisation());
 			stmt.executeUpdate();
 			
-			obj.setId(idPers);
 			super.close(stmt);
 			return true;
 		}
@@ -61,7 +62,6 @@ public class MembreDAO extends DAO<Membre>{
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
 			super.close(stmt);
 
 			return true;
@@ -74,26 +74,23 @@ public class MembreDAO extends DAO<Membre>{
 	
 	public boolean update(Membre obj){
 		PreparedStatement stmt = null;
-		long idPers = 0;
-		long idAdr = 0;
 		try{
 			adrDAO.update(obj.getAdr());
-			idAdr = adrDAO.getGeneratedId();
 			
 			stmt = connect.prepareStatement("UPDATE Personne "
-										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ?");
+										  + "SET nom = ?, prenom = ?, dateNaiss = ?, idAdr = ?, motDePasse = ? "
+										  + "WHERE idPers = " + obj.getId());
 			stmt.setString(1, obj.getNom());
 			stmt.setString(2, obj.getPrenom());
 			stmt.setDate(3, obj.getDateNaiss());
-			stmt.setLong(4, idAdr);
+			stmt.setLong(4, obj.getAdr().getId());
 			stmt.setString(5, obj.getMotDePasse());
 			stmt.executeUpdate();
 			
-			idPers = stmt.getGeneratedKeys().getLong(1);
 			stmt = connect.prepareStatement("UPDATE Membre "
-					  					  + "SET idPers = ?, cotisation = ?");
-			stmt.setLong(1, idPers);
-			stmt.setFloat(2, obj.getCotisation());
+					  					  + "SET cotisation = ? "
+					  					  + "WHERE idPers = " + obj.getId());
+			stmt.setFloat(1, obj.getCotisation());
 			stmt.executeUpdate();
 			super.close(stmt);
 			
@@ -217,14 +214,14 @@ public class MembreDAO extends DAO<Membre>{
 		return mbreList;
 	}
 	
-	public boolean addCat(int idCat, int idPers) {
+	public boolean addCat(int idCat, int idPers, float supp) {
 		PreparedStatement stmt = null;
 		try{
 			stmt = connect.prepareStatement("INSERT INTO Ligne_Membre_Cat(idPers, idCat, supplement) "
 										  + "VALUES(?, ?, ?)");
 			stmt.setInt(1, idPers);
 			stmt.setInt(2, idCat);
-			stmt.setFloat(3, 5f);
+			stmt.setFloat(3, supp);
 			stmt.executeUpdate();
 			
 			super.close(stmt);

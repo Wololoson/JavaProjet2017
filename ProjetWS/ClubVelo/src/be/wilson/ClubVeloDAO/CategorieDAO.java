@@ -147,7 +147,9 @@ public class CategorieDAO extends DAO<Categorie> {
 			stmt.setLong(4, obj.getResp().getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 
 			super.close(stmt);
 			return true;
@@ -167,7 +169,9 @@ public class CategorieDAO extends DAO<Categorie> {
 			stmt.setLong(1, obj.getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 
 			super.close(stmt);
 			return true;
@@ -196,7 +200,9 @@ public class CategorieDAO extends DAO<Categorie> {
 			stmt.setLong(4, obj.getResp().getId());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
+			ResultSet rs = stmt.getGeneratedKeys();
+			while(rs.next())
+				generatedId = rs.getInt(1);
 			super.close(stmt);
 			
 			return true;

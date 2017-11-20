@@ -1,7 +1,0 @@
-- Page de menu pour le tresorier
-- Page d'infos pour le tres
-- Page de vérification des cotisations pour le tres
-- Membre : Dans la page de la balade, rajouter une option "A payé"
-- Page de vérification des forfaits pour le tres
-
-- Commentaires Tresorier

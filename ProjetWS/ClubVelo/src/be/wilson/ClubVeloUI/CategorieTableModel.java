@@ -10,4 +10,8 @@ public class CategorieTableModel extends DefaultTableModel {
 		addColumn("Prénom");
 		addColumn("Date de naissance");
 	}
+	
+	public boolean isCellEditable(int row, int column){  
+        return false;  
+    }
 }

@@ -65,7 +65,8 @@ public class AdresseDAO extends DAO<Adresse> {
 		PreparedStatement stmt = null;
 		try{
 			stmt = connect.prepareStatement("UPDATE Adresse "
-								  		  + "SET rue = ?, numero = ?, codePost = ?, ville = ?, pays = ?");
+								  		  + "SET rue = ?, numero = ?, codePost = ?, ville = ?, pays = ?"
+								  		  + "WHERE idAdr = "+ obj.getId());
 			stmt.setString(1, obj.getRue());
 			stmt.setInt(2, obj.getNum());
 			stmt.setString(3, obj.getCodePost());
@@ -73,7 +74,6 @@ public class AdresseDAO extends DAO<Adresse> {
 			stmt.setString(5, obj.getPays());
 			stmt.executeUpdate();
 			
-			generatedId = stmt.getGeneratedKeys().getInt(1);
 			super.close(stmt);
 			
 			return true;

@@ -29,4 +29,9 @@ public class VTT extends Categorie{
 	public String getSimpleName() {
 		return String.format("VTT");
 	}
+
+	@Override
+	public String toString() {
+		return String.format(type.toString());
+	}
 }

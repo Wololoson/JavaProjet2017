@@ -256,7 +256,7 @@ public class ConnexionWindow{
 					frmConnexion.dispose();
 					MenuWindow menu;
 					RespWindow resp;
-					//TresWindow tres;
+					TresCodeWindow tresCode;
 					if(connected instanceof Membre) {
 						menu = new MenuWindow((Membre)connected);
 						menu.menuDisplay();
@@ -265,12 +265,10 @@ public class ConnexionWindow{
 						resp = new RespWindow((Responsable)connected);
 						resp.respDisplay();
 					}
-					//else {
-						//tres = new TresWindow((Tresorier)connected);
-						//tres.tresDisplay();
-					//}
-					
-					
+					else {
+						tresCode = new TresCodeWindow((Tresorier)connected);
+						tresCode.displayTresCode();
+					}
 				}
 				else {
 					errorMessage.setVisible(true);

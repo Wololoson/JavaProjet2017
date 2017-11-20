@@ -80,7 +80,8 @@ public class BaladeDAO extends DAO<Balade> {
 		PreparedStatement stmt = null;
 		try{
 			stmt = connect.prepareStatement("UPDATE Balade "
-								  		  + "SET libelleBal = ?, dateBal = ?, fraisDepla = ?, idAdr = ?, idCat = ?");
+								  		  + "SET libelleBal = ?, dateBal = ?, fraisDepla = ?, idAdr = ?, idCat = ? "
+								  		  + "WHERE idBal = " + obj.getId());
 			stmt.setString(1, obj.getLibelle());
 			stmt.setDate(2, new Date(obj.getDate().getTime()));
 			stmt.setFloat(3, obj.getFraisDepla());

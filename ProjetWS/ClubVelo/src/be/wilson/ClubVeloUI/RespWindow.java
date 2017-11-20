@@ -112,6 +112,8 @@ public class RespWindow {
 				
 		initialize();
 	}
+	
+	//FIN DE SECTION : Méthodes préalables
 
 	/**
 	 * Initialisation de la fenêtre
@@ -697,6 +699,8 @@ public class RespWindow {
 		respBalGrid.add(lblLibell);
 		
 		txtLibell = new JTextField();
+		txtLibell.setForeground(Color.WHITE);
+		txtLibell.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtLibell.setColumns(10);
 		txtLibell.setBorder(new LineBorder(Color.BLACK));
 		txtLibell.setBackground(Color.GRAY);
@@ -708,6 +712,8 @@ public class RespWindow {
 		respBalGrid.add(lblForfait);
 		
 		txtForfait = new JTextField();
+		txtForfait.setForeground(Color.WHITE);
+		txtForfait.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtForfait.setBorder(new LineBorder(Color.BLACK));
 		txtForfait.setBackground(Color.GRAY);
 		respBalGrid.add(txtForfait);
@@ -719,6 +725,8 @@ public class RespWindow {
 		respBalGrid.add(lblDate);
 		
 		txtDate = new JTextField();
+		txtDate.setForeground(Color.WHITE);
+		txtDate.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtDate.setEnabled(false);
 		txtDate.setEditable(false);
 		txtDate.setColumns(10);
@@ -732,6 +740,8 @@ public class RespWindow {
 		respBalGrid.add(label_7);
 		
 		txtRue = new JTextField();
+		txtRue.setForeground(Color.WHITE);
+		txtRue.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtRue.setColumns(10);
 		txtRue.setBorder(new LineBorder(Color.BLACK));
 		txtRue.setBackground(Color.GRAY);
@@ -743,6 +753,8 @@ public class RespWindow {
 		respBalGrid.add(lblNum);
 		
 		txtNum = new JTextField();
+		txtNum.setForeground(Color.WHITE);
+		txtNum.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtNum.setColumns(10);
 		txtNum.setBorder(new LineBorder(Color.BLACK));
 		txtNum.setBackground(Color.GRAY);
@@ -754,6 +766,8 @@ public class RespWindow {
 		respBalGrid.add(label_9);
 		
 		txtCP = new JTextField();
+		txtCP.setForeground(Color.WHITE);
+		txtCP.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtCP.setColumns(10);
 		txtCP.setBorder(new LineBorder(Color.BLACK));
 		txtCP.setBackground(Color.GRAY);
@@ -765,6 +779,8 @@ public class RespWindow {
 		respBalGrid.add(label_11);
 		
 		txtVille = new JTextField();
+		txtVille.setForeground(Color.WHITE);
+		txtVille.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtVille.setColumns(10);
 		txtVille.setBorder(new LineBorder(Color.BLACK));
 		txtVille.setBackground(Color.GRAY);
@@ -776,6 +792,8 @@ public class RespWindow {
 		respBalGrid.add(label_13);
 		
 		txtPays = new JTextField();
+		txtPays.setForeground(Color.WHITE);
+		txtPays.setFont(new Font("Arial Black", Font.PLAIN, 20));
 		txtPays.setColumns(10);
 		txtPays.setBorder(new LineBorder(Color.BLACK));
 		txtPays.setBackground(Color.GRAY);
@@ -1046,7 +1064,7 @@ public class RespWindow {
 				boolean created = false;
 				try {
 					@SuppressWarnings("deprecation")
-					long dateTmp = java.sql.Date.UTC(Integer.parseInt(txtDateAddA.getText()),Integer.parseInt(txtDateAddM.getText()), Integer.parseInt(txtDateAddJ.getText()), 0, 0, 0);
+					long dateTmp = java.sql.Date.UTC(Integer.parseInt(txtDateAddA.getText()) - 1900,Integer.parseInt(txtDateAddM.getText()), Integer.parseInt(txtDateAddJ.getText()), 0, 0, 0);
 					
 					created = baladeDAO.create(new Balade(0,
 											   txtLibellAdd.getText(),
