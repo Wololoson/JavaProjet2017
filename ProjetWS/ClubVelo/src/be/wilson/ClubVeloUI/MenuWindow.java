@@ -327,6 +327,9 @@ public class MenuWindow {
 		//Bouton permettant de choisir une balade
 		JButton selectBalBtn = new JButton("Choisir");
 		
+		//Bouton servant à définir si le paiement du forfait a été effectué
+		JButton balPaidBtn = new JButton("J'ai pay\u00E9");
+		
 		selectBalBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//Changement de fenêtre
@@ -338,6 +341,9 @@ public class MenuWindow {
 				selectedBal = listBal.get(balTable.getSelectedRow());
 				populateVoit(new VoitureTableModel());
 				titleCo.setText(selectedBal.getLibelle() + " (Forfais : " + selectedBal.getFraisDepla() + " €)");
+				
+				if(membreDAO.getForfait(connected, listBal.get(balTable.getSelectedRow())) == 0f)
+					balPaidBtn.setEnabled(false);
 			}
 		});
 		
@@ -869,6 +875,8 @@ public class MenuWindow {
 				if(!isIn) {
 					if(listVoit.get(coTable.getSelectedRow()).getPassagers().size() < listVoit.get(coTable.getSelectedRow()).getNbPlaces()) {
 						voitureDAO.addPerson((int)connected.getId(), selectedBal.getId(), listVoit.get(coTable.getSelectedRow()).getId());
+						coChoiceBtn.setEnabled(false);
+						membreDAO.updateForfait(connected, listBal.get(balTable.getSelectedRow()), listBal.get(balTable.getSelectedRow()).getFraisDepla());
 						populateVoit(new VoitureTableModel());
 					}
 					else
@@ -879,7 +887,21 @@ public class MenuWindow {
 			}
 		});
 		
-		coChoiceBtn.setPreferredSize(new Dimension(200, 50));
+		balPaidBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				balPaidBtn.setEnabled(false);
+				membreDAO.updateForfait(connected, listBal.get(balTable.getSelectedRow()), 0f);
+			}
+		});
+		balPaidBtn.setPreferredSize(new Dimension(175, 50));
+		balPaidBtn.setForeground(Color.WHITE);
+		balPaidBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
+		balPaidBtn.setFocusable(false);
+		balPaidBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		balPaidBtn.setBackground(Color.DARK_GRAY);
+		coPan.add(balPaidBtn);
+		
+		coChoiceBtn.setPreferredSize(new Dimension(175, 50));
 		coChoiceBtn.setForeground(Color.WHITE);
 		coChoiceBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
 		coChoiceBtn.setFocusable(false);
@@ -897,14 +919,14 @@ public class MenuWindow {
 			}
 		});
 		
-		coAddBtn.setPreferredSize(new Dimension(200, 50));
+		coAddBtn.setPreferredSize(new Dimension(175, 50));
 		coAddBtn.setForeground(Color.WHITE);
 		coAddBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
 		coAddBtn.setFocusable(false);
 		coAddBtn.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		coAddBtn.setBackground(Color.DARK_GRAY);
 		coPan.add(coAddBtn);
-		coBackBtn.setPreferredSize(new Dimension(200, 50));
+		coBackBtn.setPreferredSize(new Dimension(175, 50));
 		coBackBtn.setForeground(Color.WHITE);
 		coBackBtn.setFont(new Font("Century Gothic", Font.PLAIN, 35));
 		coBackBtn.setFocusable(false);

@@ -804,6 +804,8 @@ public class TresWindow {
 	
 	//Remplissage de la table de cotisations
 	public void populateCot(DefaultTableModel model) {
+		float totalForfaits = 0f;
+		
 		//Netoyage du tableau
 		cotTable.removeAll();
 		
@@ -813,9 +815,15 @@ public class TresWindow {
 		
 		//Récupération des membres
 		for(Membre m : membreDAO.findAll()) {
+			//Récupération des forfaits
+			List<Float> forfaits = membreDAO.getAllForfait(m);
+			for(Float f : forfaits)
+				totalForfaits += f;
+			
 			model.addRow(new Object[] {m.getNom().toUpperCase(),
 									   m.getPrenom(),
-									   Float.toString(m.getCotisation())});
+									   Float.toString(m.getCotisation()),
+									   totalForfaits});
 			membres.add(m);
 		}
 		cotTable.setModel(model);

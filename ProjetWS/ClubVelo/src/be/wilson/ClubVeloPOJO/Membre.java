@@ -20,7 +20,7 @@ public class Membre extends Personne{
 		this.cotisation = cotisation;
 		listeCat = catDAO.getCatList(id);
 	}
-	
+
 	public List<Categorie> getListeCat() {
 		return listeCat;
 	}

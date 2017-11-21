@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.wilson.ClubVeloPOJO.Adresse;
+import be.wilson.ClubVeloPOJO.Balade;
 import be.wilson.ClubVeloPOJO.Membre;
 
 public class MembreDAO extends DAO<Membre>{
@@ -92,6 +93,7 @@ public class MembreDAO extends DAO<Membre>{
 					  					  + "WHERE idPers = " + obj.getId());
 			stmt.setFloat(1, obj.getCotisation());
 			stmt.executeUpdate();
+			
 			super.close(stmt);
 			
 			return true;
@@ -100,6 +102,65 @@ public class MembreDAO extends DAO<Membre>{
 			System.out.println(e.getMessage());
 		}
 		return false;
+	}
+	
+	public boolean updateForfait(Membre m, Balade b, float f){
+		PreparedStatement stmt = null;
+		try{
+			stmt = connect.prepareStatement("UPDATE Eclat_Bal_Disp "
+										  + "SET forfait = ? "
+										  + "WHERE idPers = " + m.getId()
+										  + " AND idBal = " + b.getId());
+			stmt.setFloat(1, f);
+			stmt.executeUpdate();
+			
+			super.close(stmt);
+			
+			return true;
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return false;
+	}
+	
+	public float getForfait(Membre m, Balade b){
+		float f = 0f;
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT forfait FROM Eclat_Bal_Disp "
+														   + "WHERE idPers = " + m.getId()
+														   + " AND idBal = " + b.getId());
+			
+			if(result.first())
+				f = result.getFloat("forfait");
+			
+			super.close(result);
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return f;
+	}
+	
+	public List<Float> getAllForfait(Membre m){
+		List<Float> f = new ArrayList<>();
+		try{
+			ResultSet result = this.connect.createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY).executeQuery("SELECT forfait FROM Eclat_Bal_Disp "
+														   + "WHERE idPers = " + m.getId());
+			
+			while(result.next())
+				f.add(result.getFloat("forfait"));
+			
+			super.close(result);
+		}
+		catch(SQLException e){
+			System.out.println(e.getMessage());
+		}
+		return f;
 	}
 	
 	public Membre find(int id){

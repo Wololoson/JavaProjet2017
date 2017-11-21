@@ -9,6 +9,7 @@ public class CotisationTableModel extends DefaultTableModel {
 		addColumn("NOM");
 		addColumn("Prénom");
 		addColumn("Cotisation");
+		addColumn("Forfaits");
 	}
 	
 	public boolean isCellEditable(int row, int column){  
